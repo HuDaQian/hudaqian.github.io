@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
-<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1616052690504">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1616116976578">
 <link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
 
 
@@ -41,7 +41,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://hudaqian.github.io">
-        <img src="https://hudaqian.github.io/images/avatar.png?v=1616052690504" class="site-logo">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1616116976578" class="site-logo">
         <h1 class="site-title">小九的酒窝</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -131,26 +131,21 @@
 <blockquote>
 <ul>
 <li>随机选择两个质数p=61;q=53;(质数越大，越难破解)</li>
-<li>计算两个质数的乘积：n=61 *<br>
-53=3233，二进制就是110010100001，这个密钥是12位到的，实际应用中的RSA一般为1024位或者2048位</li>
+<li>计算两个质数的乘积：n=61 * 53=3233，二进制就是110010100001，这个密钥是12位到的，实际应用中的RSA一般为1024位或者2048位</li>
 <li>计算n的欧拉函数φ(n) φ(n) = (p-1)(q-1) = 3120</li>
 <li>随机选择一个整数e，条件是1&lt; e &lt; φ(n)，且e与φ(n) 互质。比如选择 e = 17</li>
-<li>计算e对于φ(n)的模反元素d。所谓&quot;模反元素&quot;就是指有一个整数d，可以使得ed被φ(n)除的余数为1。找到一组整数解，可以得出 d =<br>
-2753<br>
-<code>ed - 1 = kφ(n) 即 17d - 1 = k * 3012。</code></li>
+<li>计算e对于φ(n)的模反元素d。所谓&quot;模反元素&quot;就是指有一个整数d，可以使得ed被φ(n)除的余数为1。找到一组整数解，可以得出 d = 2753<br>
+<code>ed - 1 = kφ(n) 即 17d - 1 = k * 3012。</code><br>
+则（n,e）=（3233,17）为公钥 （n,d）=（3233,2753）为私钥</li>
 </ul>
 </blockquote>
-<p>则（n,e）=（3233,17）为公钥 （n,d）=（3233,2753）为私钥</p>
 <p>接着，用公钥对数据进行加密：</p>
-<p>RSA加密要求被加密的信息m必须是整数（字符串取ascii或者unicode），且m &lt; n。这里待加密的m = 65，根据公式进行加密，得出加密后的结果c<br>
-= 2970</p>
-<pre><code>m^e ≡ c (mod n) 即  65^17 ≡ c (mod 3233)
-c = 2970
-</code></pre>
-<p>按照私钥对c = 2970进行解密</p>
-<pre><code>c^d ≡ m (mod n) 即 2970 ^ 2753 = m(mod 3233)
-</code></pre>
-<p>得出 m = 65</p>
+<p>RSA加密要求被加密的信息m必须是整数（字符串取ascii或者unicode），且m &lt; n。这里待加密的m = 65，根据公式进行加密，得出加密后的结果c  = 2970<br>
+m^e ≡ c (mod n) 即  65^17 ≡ c (mod 3233)<br>
+c = 2970<br>
+按照私钥对c = 2970进行解密<br>
+c^d ≡ m (mod n) 即 2970 ^ 2753 = m(mod 3233)<br>
+得出 m = 65</p>
 <p>对于更长的数据可以采用分段加密，或者采用DES加密数据后，再把密钥用RSA加密。接受者用RSA解密密钥，然后再用DES解密数据。</p>
 <p><a href="https://hudaqian.github.io/tag/baseKnowledge"> 计算机原理 </a></p>
 
