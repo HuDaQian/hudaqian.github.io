@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>调整OC框架使其拥有Swift的使用体验 | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1638110672068">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="除了Swift编译器在转换OC接口时做的优化工作之外，还可以通过以下方式进行进一步的优化：
+
+遵循编译器的某些规则；
+在头文件里进行特殊标注；
+用Swift做中间层，重新封装原有的代码；
+根据自己的喜好进一步优化；
+
+查看编译器生成的Swi..." />
+    <meta name="keywords" content="设计模式" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1638110672068" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">调整OC框架使其拥有Swift的使用体验</h2>
+            <div class="post-date">2021-02-27</div>
+            
+            <div class="post-content" v-pre>
+              <p>除了Swift编译器在转换OC接口时做的优化工作之外，还可以通过以下方式进行进一步的优化：</p>
+<ul>
+<li>遵循编译器的某些规则；</li>
+<li>在头文件里进行特殊标注；</li>
+<li>用Swift做中间层，重新封装原有的代码；</li>
+<li>根据自己的喜好进一步优化；</li>
+</ul>
+<h3 id="查看编译器生成的swift接口">查看编译器生成的Swift接口</h3>
+<p><img src="https://hudaqian.github.io/post-images/1629795732377.png" alt="OC" loading="lazy"><br>
+在Objective-C的头文件中，点击左上角的Related Items按钮，选择Generated Interface后，就会出现不同Swift版本的接口文件。<br>
+<img src="https://hudaqian.github.io/post-images/1629795752108.png" alt="Swift" loading="lazy"></p>
+<h3 id="自动生成的接口">自动生成的接口</h3>
+<p>根据OC源码生成的API接口，Swift编译器已经做了不少的优化，比如：</p>
+<ul>
+<li>将NSString、NSDate等类型转化成String、Date类型；</li>
+<li>将Objective-C的初始化方法转化成Swift里的构造器方法；</li>
+<li>将原有的方法根据介词优化成Swift规范的方法；</li>
+<li>将OC错误处理的API改进成Swift风格的API；</li>
+</ul>
+<pre><code>public let SKRocketSaturnV: String
+open class SKMission : NSObject {
+    public init!(name: String!, launch launchDate: Date!, rocket: String!, capsule: String!)
+    public init(contentofURL url: URL!) throws
+    open var name: String?
+    open var launchDate: Date!
+    open var rocket: String!
+    open var capsule: String!
+    open var crews: [Any]!
+    @available(*, deprecated)
+    open func save(to url: URL!, error: NSErrorPointer) -&gt; Bool    
+    open func previousMissiionsFlown(by astronaut: SKAstronaut!) -&gt; Set&lt;AnyHashable&gt;!
+}
+
+public typealias SKRocket = UnsafeMutablePointer&lt;Int32&gt;
+public let SKRocketAtlas: SKRocket!
+public let SKRocketTitanII: SKRocket!
+public let SKRocketSaturnIB: SKRocket!
+public let SKRocketSaturnV: SKRocket!
+public func SKRocketStageCount(_: SKRocket!) -&gt; Int32
+
+open class SKAstronaut : NSObject {
+    public init(nameConponents name: PersonNameComponents)   
+    public convenience init(name: String)
+    open var nameComponents: PersonNameComponents
+    open var name: String! { get }
+}
+</code></pre>
+<p>这样的API还存在一些问题：<br>
+SKMission</p>
+<ul>
+<li>过多的隐式解析；</li>
+<li>数组属性中的Any定义模糊；</li>
+<li>异常处理的问题；</li>
+<li>方法名称未达到Swift规范；<br>
+SKAstronaut</li>
+<li>构造器之间的关系不够清晰；<br>
+其它</li>
+<li>NSError风格的API在Swift里的使用体验非常不好，尤其在try-catch中；</li>
+<li>用于枚举的字符串变量在Swift里更适合使用enum类型来描述；</li>
+<li>部分API未能成功转化；</li>
+<li>强制解析的API有crash风险；</li>
+</ul>
+<h3 id="改进">改进</h3>
+<p>我们从以下几个方向入手优化：</p>
+<ul>
+<li>提供更丰富的类型信息；</li>
+<li>遵守Objective-C的约定；</li>
+<li>解决缺少API的问题；</li>
+<li>改善框架在Swift中的体验；</li>
+</ul>
+<h3 id="提供更丰富的类型信息">提供更丰富的类型信息</h3>
+<h4 id="1-增加nullability的描述信息">1、增加nullability的描述信息</h4>
+<p>OC的指针可以是一个有效值也可以是空值。默认情况下，Swift会把OC里的指针当成隐式解析可选类型。<br>
+我们可以使用nullable和nonnull来描述相应指针来告诉Swift编译器指针的类型，注意声明方法修改完之后，方法实现的时候也需要修改以下。<br>
+除了这两个描述以外，还有一对配合使用的宏(NS_ASSUME_NONNULL_BEGIN和NS_ASSUM_NONNULL_END)也可以达到同样的目的。<br>
+在这两个宏包裹的代码片段中，属性、方法参数和返回值的默认注释都是nonnull的。<br>
+但是这并不适合所有的场合，比如将nonnull放到常量前的时候会触发编译器错误。也就是使用nonnull和nollable的底层内容_Nonnull和_Nulllable。<br>
+这两种注解除了可以用在全局常量、全局函数的场景外，也适用于任何Objective-C任何地方的指针，甚至指向指针类型的指针。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://hudaqian.github.io/tag/DesignPatterns/" class="tag">
+                    设计模式
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hudaqian.github.io/OClikeSwiftProtocolExtension/">
+                  <h3 class="post-title">
+                    OC像Swift一样提供protocol的默认实现
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '70e70574c307d3e0aab1',
+        clientSecret: 'f4cac46a3ae606b5b74da444d7e6afbfbdea51d0',
+        repo: 'hudaqian.github.io',
+        owner: 'HuDaQian',
+        admin: ['HuDaQian'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

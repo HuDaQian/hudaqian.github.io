@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>设计模式 | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1638114699559">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="&lt;h3&gt;最香不过荷包蛋&lt;br&gt;最美不过夜归人&lt;h3&gt;">
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1638114699559" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <h2 class="current-tag">标签: 设计模式</h2>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_CodeClean/">
+                  <h2 class="post-title">Clean your code</h2>
+                </a>
+                <div class="post-date">
+                  2021-01-16
+                </div>
+                <div class="post-abstract">
+                  <p>任何一个傻瓜都能写出计算机可以理解的代码。唯有写出人类容易理解的代码，才是优秀的程序员。<br>
+--Martin Fowler</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_ActionPattern_5/">
+                  <h2 class="post-title">设计模式之行为型模式（5）：策略模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-06-07
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_ActionPattern_4/">
+                  <h2 class="post-title">设计模式之行为型模式（4）：状态模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-06-06
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_ActionPattern_3/">
+                  <h2 class="post-title">设计模式之行为型模式（3）：观察者模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-06-05
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_ActionPattern_2/">
+                  <h2 class="post-title">设计模式之行为型模式（2）：中介者模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-06-04
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_ActionPattern_1/">
+                  <h2 class="post-title">设计模式之行为型模式（1）：命令模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-06-03
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_StructureTypePattern_6/">
+                  <h2 class="post-title">设计模式之结构型模式（6）：代理模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-06-02
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_StructureTypePattern_5/">
+                  <h2 class="post-title"> 设计模式之结构型模式（5）：享元模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-06-01
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_StructureTypePattern_4/">
+                  <h2 class="post-title"> 设计模式之结构型模式（4）：外观模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-05-27
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_StructureTypePattern_3/">
+                  <h2 class="post-title">设计模式之结构型模式（3）：装饰模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-05-20
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_StructureTypePattern_2/">
+                  <h2 class="post-title">设计模式之结构型模式（2）：桥接模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-05-13
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_StructureTypePattern_1/">
+                  <h2 class="post-title">设计模式之结构型模式（1）：适配器模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-05-06
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_ClassCreationalPattern_5/">
+                  <h2 class="post-title">设计模式之类创建模式（5）：单例模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-04-29
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_ClassCreationalPattern_4/">
+                  <h2 class="post-title">设计模式之类创建模式（4）：建造者模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-04-22
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_ClassCreationalPattern_3/">
+                  <h2 class="post-title">设计模式之类创建模式（3）：抽象工厂模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-04-15
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_ClassCreationalPattern_2/">
+                  <h2 class="post-title">设计模式之类创建模式（2）：工厂方法模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-04-08
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_ClassCreationalPattern_1/">
+                  <h2 class="post-title">设计模式之类创建模式（1）：简单工厂模式</h2>
+                </a>
+                <div class="post-date">
+                  2019-04-01
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_DesignPatternsClass/">
+                  <h2 class="post-title">设计模式之模式分类</h2>
+                </a>
+                <div class="post-date">
+                  2019-03-26
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/DesignPatterns_ClassRelationships/">
+                  <h2 class="post-title">设计模式之类之间的关系</h2>
+                </a>
+                <div class="post-date">
+                  2019-03-25
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

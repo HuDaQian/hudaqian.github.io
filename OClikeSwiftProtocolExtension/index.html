@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>OC像Swift一样提供protocol的默认实现 | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1638114699559">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Swift中的protocol可以通过extension提供默认实现。
+OC中可以实现协议的只有对象，而对象的基类是NSObject，所以可以创建一个NSObject的分类，然后在分类中实现协议内容。
+当然还可以在别的类中实现，用来缩小影响..." />
+    <meta name="keywords" content="iOS,iOS" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1638114699559" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">OC像Swift一样提供protocol的默认实现</h2>
+            <div class="post-date">2021-02-20</div>
+            
+            <div class="post-content" v-pre>
+              <p>Swift中的protocol可以通过extension提供默认实现。<br>
+OC中可以实现协议的只有对象，而对象的基类是NSObject，所以可以创建一个NSObject的分类，然后在分类中实现协议内容。<br>
+当然还可以在别的类中实现，用来缩小影响范围，比如controller相关的在UIViewController的分类中实现，view相关协议在UIView的分类中实现。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://hudaqian.github.io/tag/iOS/" class="tag">
+                    iOS
+                  </a>
+                
+                  <a href="https://hudaqian.github.io/tag/iOS/" class="tag">
+                    iOS
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hudaqian.github.io/swiftExtension/">
+                  <h3 class="post-title">
+                    Swift的extension
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '70e70574c307d3e0aab1',
+        clientSecret: 'f4cac46a3ae606b5b74da444d7e6afbfbdea51d0',
+        repo: 'hudaqian.github.io',
+        owner: 'HuDaQian',
+        admin: ['HuDaQian'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[iOS]无侵入埋点方案的实现 | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1638114699559">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="在iOS开发中，埋点可以解决两大类问题：一是了解用户使用App的习惯，二是降低分析线上问题的难度。目前，iOS常见的埋点方式有三种：代码埋点、可视化埋点和无埋点这三种。
+
+代码埋点主要就是通过手写代码的方式来埋点，能很精确的在需要埋点的代码..." />
+    <meta name="keywords" content="iOS,iOS" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1638114699559" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[iOS]无侵入埋点方案的实现</h2>
+            <div class="post-date">2020-06-16</div>
+            
+            <div class="post-content" v-pre>
+              <p>在iOS开发中，埋点可以解决两大类问题：一是了解用户使用App的习惯，二是降低分析线上问题的难度。目前，iOS常见的埋点方式有三种：代码埋点、可视化埋点和无埋点这三种。</p>
+<ul>
+<li>代码埋点主要就是通过手写代码的方式来埋点，能很精确的在需要埋点的代码处加上埋点的代码，可以很方便地记录当前环境的变量值，方便调试，并跟踪埋点内容，但存在开发工作量大，并且埋点代码到处都是，后期难以维护等问题。</li>
+<li>可视化埋点，就是将埋点增加和修改的工作可视化了，提升了增加和维护埋点的体验。</li>
+<li>无埋点，并不是不需要埋点，而更确切地说是“全埋点”，而且埋点代码不会出现在业务代码中，容易管理和维护。它的缺点在于，埋点成本高，后期的解析也比较复杂，再加上 view_path 的不确定性。所以，这种方案并不能解决所有的埋点需求，但对于大量通用的埋点需求来说，能够节省大量的开发和维护成本。</li>
+</ul>
+<p>可视化埋点和无埋点，都属于是无侵入的埋点方案，因为它们都不需要在工程代码中写入埋点代码。所以，采用这样的无侵入埋点方案，既可以做到埋点被统一维护，又可以实现和工程代码的解耦。</p>
+<p>对于iOS大多数常见埋点情况来说，我们都可以通过运行时方法替换技术来插入埋点代码，以实现无侵入埋点的埋点方法。</p>
+<p>首先，写一个运行时方法替换的类 ***Hook。</p>
+<pre><code>+ (void)hookClass:(Class)classObject fromSelector:(SEL)fromSelector toSelector:(SEL)toSelector {
+    Class class = classObject;
+    // 得到被替换类的实例方法
+    Method fromMethod = class_getInstanceMethod(class, fromSelector);
+    // 得到替换类的实例方法
+    Method toMethod = class_getInstanceMethod(class, toSelector);
+    
+    // class_addMethod 返回成功表示被替换的方法没实现，然后会通过 class_addMethod 方法先实现；返回失败则表示被替换方法已存在，可以直接进行 IMP 指针交换
+    if(class_addMethod(class, fromSelector, method_getImplementation(toMethod), method_getTypeEncoding(toMethod))) {
+      // 进行方法的替换
+        class_replaceMethod(class, toSelector, method_getImplementation(fromMethod), method_getTypeEncoding(fromMethod));
+    } else {
+      // 交换 IMP 指针
+        method_exchangeImplementations(fromMethod, toMethod);
+    }
+
+}
+</code></pre>
+<p>然后，再写个工具类，记录下统计信息（Hook了谁，做了什么）。</p>
+<p>接下来就是在几个类中写替换方法了：<br>
+UIViewController</p>
+<pre><code>+ (void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&amp;onceToken, ^{
+        // 通过 @selector 获得被替换和替换方法的 SEL，作为 ***Hook:hookClass:fromeSelector:toSelector 的参数传入
+        SEL fromSelectorAppear = @selector(viewWillAppear:);
+        SEL toSelectorAppear = @selector(hook_viewWillAppear:);
+        [***Hook hookClass:self fromSelector:fromSelectorAppear toSelector:toSelectorAppear];
+        
+        SEL fromSelectorDisappear = @selector(viewWillDisappear:);
+        SEL toSelectorDisappear = @selector(hook_viewWillDisappear:);
+        
+        [***Hook hookClass:self fromSelector:fromSelectorDisappear toSelector:toSelectorDisappear];
+    });
+}
+
+- (void)hook_viewWillAppear:(BOOL)animated {
+    // 先执行插入代码，再执行原 viewWillAppear 方法
+    [self insertToViewWillAppear];
+    [self hook_viewWillAppear:animated];
+}
+- (void)hook_viewWillDisappear:(BOOL)animated {
+    // 执行插入代码，再执行原 viewWillDisappear 方法
+    [self insertToViewWillDisappear];
+    [self hook_viewWillDisappear:animated];
+}
+
+- (void)insertToViewWillAppear {
+    // 在 ViewWillAppear 时进行日志的埋点
+    // HookCode here
+}
+
+- (void)insertToViewWillDisappear {
+    // 在 ViewWillDisappear 时进行日志的埋点
+    // HookCode here
+}
+</code></pre>
+<p>UIControl</p>
+<pre><code>+ (void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&amp;onceToken, ^{
+        // 通过 @selector 获得被替换和替换方法的 SEL，作为 ***Hook:hookClass:fromeSelector:toSelector 的参数传入
+        SEL fromSelector = @selector(sendAction:to:forEvent:);
+        SEL toSelector = @selector(hook_sendAction:to:forEvent:);
+        [***Hook hookClass:self fromSelector:fromSelector toSelector:toSelector];
+    });
+}
+
+- (void)hook_sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event {
+    [self insertToSendAction:action to:target forEvent:event];
+    [self hook_sendAction:action to:target forEvent:event];
+}
+- (void)insertToSendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event {
+    // 日志记录
+    if ([[[event allTouches] anyObject] phase] == UITouchPhaseEnded) {
+        NSString *actionString = NSStringFromSelector(action);
+        NSString *targetName = NSStringFromClass([target class]);
+        
+      // HookCode here
+    }
+}
+</code></pre>
+<p>UITableView</p>
+<pre><code>+ (void)load {
+    SEL fromSelector = @selector(setDelegate:);
+    SEL toSelector = @selector(fpc_toDelegate:);
+    
+    [***Hook hookClass:self fromSelector:fromSelector toSelector:toSelector];
+}
+
+- (void)hook_toDelegate:(id &lt;UITableViewDelegate&gt;)delegate {
+    [self hook_toDelegate:delegate];
+    // 得到代理对象,代理对象会调用代理方法
+    SEL fromSelector = @selector(tableView:didSelectRowAtIndexPath:);
+    SEL toSelector = @selector(hook_tableView:didSelectRowAtIndexPath:);
+    
+    // 得到被替换的类的实例方式
+    Method fromMethod = class_getInstanceMethod(delegate.class, fromSelector);
+    // 得到替换的类的实例方法
+    Method toMethod = class_getInstanceMethod(self.class, toSelector);
+    
+    // class_addMethod 添加要替换的方法
+    class_addMethod(delegate.class, toSelector, method_getImplementation(toMethod), method_getTypeEncoding(toMethod));
+    Method hookMethod = class_getInstanceMethod(delegate.class, toSelector);
+    method_exchangeImplementations(fromMethod, hookMethod);
+    
+}
+
+-(void)fpc_tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // HookCode here
+    [self hook_tableView:tableView didSelectRowAtIndexPath:indexPath];
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://hudaqian.github.io/tag/iOS/" class="tag">
+                    iOS
+                  </a>
+                
+                  <a href="https://hudaqian.github.io/tag/iOS/" class="tag">
+                    iOS
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hudaqian.github.io/ios-codesnippet/">
+                  <h3 class="post-title">
+                    [iOS]Code Snippet
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '70e70574c307d3e0aab1',
+        clientSecret: 'f4cac46a3ae606b5b74da444d7e6afbfbdea51d0',
+        repo: 'hudaqian.github.io',
+        owner: 'HuDaQian',
+        admin: ['HuDaQian'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

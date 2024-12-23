@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Clean your code | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1638114699559">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="任何一个傻瓜都能写出计算机可以理解的代码。唯有写出人类容易理解的代码，才是优秀的程序员。
+--Martin Fowler
+
+对于一个项目来说，随着开发时长以及接手的开发者的不断增加，项目的可维护性会越来越差，可能会引发一系列问题：
+
+重复造..." />
+    <meta name="keywords" content="设计模式" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1638114699559" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Clean your code</h2>
+            <div class="post-date">2021-01-16</div>
+            
+            <div class="post-content" v-pre>
+              <p>任何一个傻瓜都能写出计算机可以理解的代码。唯有写出人类容易理解的代码，才是优秀的程序员。<br>
+--Martin Fowler</p>
+<!-- more -->
+<p>对于一个项目来说，随着开发时长以及接手的开发者的不断增加，项目的可维护性会越来越差，可能会引发一系列问题：</p>
+<ul>
+<li>重复造轮子，后边开发者不知道前面已经有人写了相同或者相似的函数，导致工具类或者基类变得庞大，或者多出很多子类。</li>
+<li>代码过于复杂，缺失注释，方法不够简化等。</li>
+<li>目录结构比较杂乱，个人有个人的风格。</li>
+<li>...<br>
+合理的CR环节，可以有效地把控每次提交的代码质量，不至于让项目的可维护性随着版本迭代和时间推移变得太差，这也是CR的首要目的。</li>
+</ul>
+<p>Reviewer和Reviewee，在参与CR的过程中，都是可以收获到许多知识，进行技术交流的。</p>
+<ul>
+<li>有利于帮助新人快速成长，团队有新人加入时（如实习生和校招生），往往需要以为导师带领一段时间，通过CR环节，可以使导师最直接的了解到新人开发过程中所遇到的问题，作出相应的指导。</li>
+<li>通过CR环节，团队成员可以了解他人的业务，而不局限于自己的所负责的业务范围。项目发现问题时，可以迅速定位到相关业务的负责人进行修改。同时若有的团队成员离职后，也可以减少业务一人负责所带来的后期维护困难。</li>
+<li>学习他人的优秀代码。通过CR环节，可以迅速接触到团队成员在项目中解决某些问题的优秀代码，或者使用的一些你所未接触过的一些api等。</li>
+</ul>
+<p>而要进行CR，首先要对项目规范制定要求，编码风格呀、目录结构以及业务规范等等。一方面，统一的项目规范才能保证项目的代码质量，提高项目的质量和可维护性；另一方面，在大家熟悉了统一的规范后，能够提升CR的效率，节省时间。</p>
+<p>而对于个人来说，在开发过程中遇到的一些小问题及时处理，就能减少当前开发和之后的维护的工作量。</p>
+<pre><code>    设计模式六大原则：
+        单一职责原则 Single Responsibility Principle
+        开闭原则 Open Closed Principle
+        里氏替换原则 Liskov Suubstitution Principle
+        迪米特法则 Law of Demeter
+        接口抽离原则 Interface Segregation Principle
+        依赖倒置原则 Dependence Inversion Principle
+</code></pre>
+<blockquote>
+<p>Long Method (过长函数)</p>
+</blockquote>
+<p>函数长度有三种情况，一种是函数名称过长，一种是参数过长，一种是函数体过长。<br>
+函数名称过长是命名问题，合理的重命名即可。<br>
+参数过长，方法参数的数量太多会导致代码的可读性非常差，如果有多个重载方法，他们的方法参数都非常多，那么在写代码的时候就很难判断该调用哪一个。解决这个问题的方法就是，将参数封装到一个DTO(Data Transfer Object)对象中，函数调用的参数使用对象而非多个参数。这里重点提一下不建议使用哈希映射来代替对象，哈希映射是可以将多个参数放在一起生成哈希映射对象传入函数，但是对于key的名字和value的数据类型没有明确的肯定，所以不建议使用。<br>
+函数体过长就是因为这个函数职责不够单一，一个函数中堆积太多功能，解决这个问题的方法就是Extract Method（提取函数），积极抽取函数，隐藏细节保持职责单一。</p>
+<blockquote>
+<p>Large Class (过大的类)</p>
+</blockquote>
+<p>过大的类也被称为上帝类, 指的是一个类承担了过多的职责，在使用或者继承的时候会也有很多关联问题出现。</p>
+<pre><code>    上帝类的判断条件
+        CPFD (Capsules Providing Foreign Data) 从多个不相关类（模块）中引用数据
+        WOC (Weighted Operation Count) 类中所有函数的圈复杂度之和超过65。
+        TCC (Tight Capsule Cohesion) TCC &lt; 1/3 类需要具有低内聚的特性，类中直接相关的方法与全部方法之比小于1/3，也就是较少的private方法。
+</code></pre>
+<p>解决这个问题，首先从属性入手，看有没有一些属性有关联，如果有，则可以使用Extract Class(提取类)的手段将关联属性抽象到一个新类中，并将这些属性相关的操作都移动到新类中。<br>
+然后观察这个类的方法， 看有没有一些函数存在关联，如果有的话，也可以使用Extract SubClass(提炼子类)的手段将这些方法提炼到子类中，子类可以继承父类，将相似的行为方法聚集在一个类中拆分到多个类中，可以进一步将方法调用解耦开。<br>
+目的就是将一个大类拆分为多个小且职责单一的类。</p>
+<blockquote>
+<p>Duplicate Code (重复代码)<br>
+重复可能是软件中一些邪恶的根源。 -- Robert C.Martin</p>
+</blockquote>
+<p>重复代码一般是由于复制粘贴造成的。需求迭代过程中，为了不影响已有功能，通常是将之前的代码复制一份改一改，然后直接上线。<br>
+最直接的弊端就是，如果这段代码要调整一部分逻辑，太容易遗漏了，而且不确定改完的代码是否可用。<br>
+分实践场景来说重复代码可能出现的情况：<br>
+1、同一个类中多个方法中含有相同的表达式。<br>
+重构手段：将两个方法共同的逻辑抽象出来。<br>
+2、两个具有相同父类的子类内含有相同的表达式。<br>
+重构手段：将重复代码抽象成一个方法放在父类中，差异部分由子类各自补充。<br>
+3、两个毫无相关的类出现重复代码。<br>
+重构手段：将重复的代码抽象到独立的普通类或者工具类中，使用方可以使用组合的方式调用。</p>
+<blockquote>
+<p>Shotgun Surgery (散弹式修改)</p>
+</blockquote>
+<p>这种情况出现在多个不同的类中要增加或修改新属性或者方法。首先很难修改，其次可能会有遗漏。<br>
+解决这个问题的手段是Move Method(搬移函数) 和 Move Field(搬移字段)，将要修改的代码放入一个类中处理。</p>
+<blockquote>
+<p>Sepculative Generality (夸夸其谈其未来性)</p>
+</blockquote>
+<p>互联网需求更新速度很快，“未来可以”的另一层含义是当下并不需要，有时候过度的抽象和预留扩展也会让系统难以理解。<br>
+代码上总是谈未来可能性，会让团队陷入泥沼，每次有业务变动，开发人员都会考虑各种未来可能性，预留足够多的扩展接口，这无疑大大增加了代码复杂度，让一个可能快速上线的需求慢了下来。<br>
+在代码架构设计中有简单设计原则（Simple Design）。</p>
+<pre><code>    当实现当下业务时，要考虑四个原则：通过测试、揭示意图、消除重复、最少元素。
+    当需要为未来而写的代码时，可以做这些：
+        1、删除那些觉得未来有用的参数、代码、方法调用。
+        2、修正方法名，使方法名揭示当下业务场景的意图，避免抽象的技术描述词。
+</code></pre>
+<p>如果代码的改动是未来必然会发现的，那么建议保留。夸夸其谈未来性更多的是指开发人员无依据臆测未来，导致代码模块被过度设计。</p>
+<blockquote>
+<p>Comments（过多的解释）</p>
+</blockquote>
+<p>好的解释可以辅助开发人员快速阅读理解代码，<br>
+过多的注释或者坏注释可能会降低代码的可读性。<br>
+解决这个问题呢，写注释的时候注意几点：<br>
+1、如果代码块不再使用，请直接删除而不要使用注释。（代码历史检查的事情，请交给代码管理工具）<br>
+2、函数、变量的命名尽量见名知意，避免用注释再解释一遍。<br>
+3、如果较短的注释不能覆盖方法的含义，可能是这个方法职责不单一。</p>
+<p>在编码中不断更新写作习惯和技巧，在简洁和健壮中选取适合的行为，适合自己和团队的才是最好的。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://hudaqian.github.io/tag/DesignPatterns/" class="tag">
+                    设计模式
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hudaqian.github.io/Algorithms_MinStack/">
+                  <h3 class="post-title">
+                    最小栈
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '70e70574c307d3e0aab1',
+        clientSecret: 'f4cac46a3ae606b5b74da444d7e6afbfbdea51d0',
+        repo: 'hudaqian.github.io',
+        owner: 'HuDaQian',
+        admin: ['HuDaQian'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>重读-《我的第一本算法书》-08 其它算法 | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1638114699559">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="欧几里得算法
+欧几里得算法又叫辗转相除法，用来计算两个数的最大公约数。
+计算两个数的最大公约数的时候，通常做法是因式分解，然后求出最大公约数。
+首先用大一点的数A除以另一个数B求余数C，然后再用B除以C取余数D，然后C除以D...直到余数为..." />
+    <meta name="keywords" content="算法" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1638114699559" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">重读-《我的第一本算法书》-08 其它算法</h2>
+            <div class="post-date">2020-12-31</div>
+            
+            <div class="post-content" v-pre>
+              <h4 id="欧几里得算法">欧几里得算法</h4>
+<p>欧几里得算法又叫辗转相除法，用来计算两个数的最大公约数。<br>
+计算两个数的最大公约数的时候，通常做法是因式分解，然后求出最大公约数。<br>
+首先用大一点的数A除以另一个数B求余数C，然后再用B除以C取余数D，然后C除以D...直到余数为0的时候，最后一次除法的被除数就是两个数的最大公约数。</p>
+<h4 id="素数测试">素数测试</h4>
+<p>素数测试是判断一个自然数是否为素数的测试。素数就是只能被1和其自身整除且大于1的自然数.</p>
+<p>如果数字比较大的时候，从前向后慢慢检查是否可以被整除太耗费时间，这个时候就可以使用费马测试来解决这个问题。<br>
+费马测试又称为概率性素性测试，它判断的是“某个数是素数的概率大不大”。<br>
+推理过程，以5这个素数来说，分别计算比它小的数字的5次方，然后对结果取余，然后除以5求余，得到的结果等于它自身。所以关于素数5， n^5 mod 5 = n 成立。这里就是费马小定理，对于任意素数P，<br>
+公式<code>n^p mod p = n</code> 成立。根据费马小定理来判断一个数是否为素数的方法就是费马测试。</p>
+<p>确认n和余数一致的次数越多，需要判断的数为素数的可能性就越大。但是如果每一个小于P的数都要去计算，就会非常耗时间。<br>
+Tips：如果P是素数，那么所有比P小的数n都满足费马小定理。但反过来，即使所拥有的n都满足条件，p也有可能不是素数，因此在极低的概率下会出现所有的n都满足条件的合数。这样的合数就叫做 “卡迈克尔数”，也叫“绝对伪素数”。<br>
+例如：[561, 1105, 1729, 2465, 2821, 6601, 8911, 10585, 15841, 29341, 41041, 46657, 52633, 62745, 63973...]</p>
+<h4 id="网页排名">网页排名</h4>
+<p>网页排名就是利用网页之间的链接结构计算出网页价值的算法。没有链入页面的权重为1，有链入页面的网页权重就是其链入页面的权重之和。如果一个网页链向多个页面，那么其链向的所有页面将平分它的权重。在网页排名中，链入的页面越多，该网页所发出的链接的价值就越高。<br>
+问题是在链接结构为环状的情况下，就会出现问题。这时候，可以使用随机游走模型来解决这个问题。站在上帝视角上，就会看到浏览网页的人只是在不断重复着“在有链接指向的页面之间移动几次以后，远程跳转到完全不相关的网页”这一过程。那么一段时间以后，各个网页的浏览次数除以总浏览量就是某一刻这个网页正在被浏览的概率，随机游走模型就会直接将其作为网页的权重来使用。</p>
+<h4 id="汉诺塔">汉诺塔</h4>
+<p>三根柱子，n个圆盘，移动规则：一次只能移动一个圆盘，不能把大的圆盘放在小的圆盘上。目的是将所有的圆盘从第一根柱子移动到第三根柱子上。<br>
+使用数学归纳法就可以很轻松的证明不管有多少个圆盘都可以完成操作。<br>
+数量为1的时候可以完成，<br>
+数量为2的时候可以完成，<br>
+假设当数量为n-1的时候可以完成，<br>
+那么我们既然能将n-1个盘子移动到第三根柱子上，那么我们也可以将其移动到第二根柱子上，这时，我们再将最后一个圆盘移动到第三根柱子上，所以我们也可以将n-1个盘子从第二根柱子移动到第三根柱子上，得证。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://hudaqian.github.io/tag/Algorithms/" class="tag">
+                    算法
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_10/">
+                  <h3 class="post-title">
+                    重读-《我的第一本算法书》-07 安全算法
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '70e70574c307d3e0aab1',
+        clientSecret: 'f4cac46a3ae606b5b74da444d7e6afbfbdea51d0',
+        repo: 'hudaqian.github.io',
+        owner: 'HuDaQian',
+        admin: ['HuDaQian'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

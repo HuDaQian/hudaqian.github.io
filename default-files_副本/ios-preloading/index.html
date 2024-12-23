@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>iOS无感知的上拉加载 | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1638114699559">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="移动app中，列表页面非常常见，apple为我们提供了UITableView和UICollectionView这两大组件来帮我们执行这样的任务。server根据请求的page返回对应分页数据，然后app这边请求到数据之后，更新数据源并刷新界..." />
+    <meta name="keywords" content="iOS,iOS" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1638114699559" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">iOS无感知的上拉加载</h2>
+            <div class="post-date">2021-01-30</div>
+            
+            <div class="post-content" v-pre>
+              <p>移动app中，列表页面非常常见，apple为我们提供了UITableView和UICollectionView这两大组件来帮我们执行这样的任务。server根据请求的page返回对应分页数据，然后app这边请求到数据之后，更新数据源并刷新界面，中间请求的时候，我们可以使用MJRefresh这样的第三方来反映当前的状态，是请求中还是已经请求完毕，或者是已经没有更多的数据了。<br>
+但是在网络比较差的时候偶，app向server请求数据到获取到数据并更新界面的时间会很长，非常影响用户体验，为了改善这种情况，在iOS10上，apple引入了Prefetching API，提供了一种在需要显示数据之前预先准备数据的机制，旨在提高数据的滚动性能。<br>
+正常情况下，在构建UITableView的时候，需要对其行数做一个初始化，但是如果每次根据服务端返回的数据去更新行数并reload的时候，Prefetching API就失去作用了，它起作用的前提是要保证预加载数据时候，UITableView当前的行数要小于其总行数，当然也可以实现数据加载，不过跟我们预期效果不一致。<br>
+也就是说，我们在分页请求的时候，需要server提供当前的数据以及总的数据量。在这里，我们模拟一下数据请求，从server请求30张图片</p>
+<pre><code>    func fetchImages() {
+        guard !isFetchInProcess else {
+            return
+        }
+        
+        isFetchInProcess = true
+        // 延时 2s 模拟网络环境
+        DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 2) {
+            DispatchQueue.main.async {
+                self.total = 1000
+                self.currentPage += 1
+                self.isFetchInProcess = false
+                let imagesData = (1...30).map {
+                    ImageModel(url: baseURL+&quot;\($0).png&quot;, order: $0)
+                }
+                self.images.append(contentsOf: imagesData)
+
+                if self.currentPage &gt; 1 {
+                    let newIndexPaths = self.calculateIndexPathsToReload(from: imagesData)
+                    self.delegate?.onFetchCompleted(with: newIndexPaths)
+                } else {
+                    self.delegate?.onFetchCompleted(with: .none)
+                }
+            }
+        }
+    }
+</code></pre>
+<p>这里通过代理在controller更新view内容</p>
+<pre><code>    func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?) {
+        guard let newIndexPathsToReload = newIndexPathsToReload else {
+            tableView.tableFooterView = nil
+            tableView.reloadData()
+            return
+        }
+        
+        let indexPathsToReload = visibleIndexPathsToReload(intersecting: newIndexPathsToReload)
+        indicatorView.stopAnimating()
+        tableView.reloadRows(at: indexPathsToReload, with: .automatic)
+    }
+    
+    func onFetchFailed(with reason: String) {
+        indicatorView.stopAnimating()
+        tableView.reloadData()
+    }
+</code></pre>
+<p>然后，我们实现一下UITableViewDataSourcePrefetching的协议，这个协议中包含两个函数</p>
+<pre><code>public protocol UITableViewDataSourcePrefetching : NSObjectProtocol {
+
+    
+    // indexPaths are ordered ascending by geometric distance from the table view
+    @available(iOS 2.0, *)
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath])
+
+    
+    // indexPaths that previously were considered as candidates for pre-fetching, but were not actually used; may be a subset of the previous call to -tableView:prefetchRowsAtIndexPaths:
+    @available(iOS 2.0, *)
+    optional func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath])
+}
+</code></pre>
+<p>前者会基于当前滚动的方向和速度对接下来的indexPaths进行Prefetch，通常我们在这里实现预加载数据的逻辑。<br>
+第二个方法是当用户快速滚动导致一些cell不可见的时候，可以通过这个方法来取消任何挂起的数据加载操作，有利于提高滚动性能。<br>
+然后，我们实现这两个方法，让预加载的图片异步加载并且设定一下缓存。<br>
+如果想再进一步优化的话，我们可以在cellForRowIndexPath方法中实例化cell，然后在willDisplayCell方法中进行数据绑定，后者在cell展示之前会被调用，此时cell实例已经生成，不能再修改cell结构了，但是可以改动cell上的UI组件的一些属性。<br>
+Tips：<br>
+这里写出一般的列表优化思路：<br>
+1、就是上文提出的cell复用过程中，cellForRowIndexPath实例化cell，willDisplayCell绑定数据。<br>
+2、减少view数目。大量绘制UI组件会消耗很大的资源并影响渲染性能。所以可以在初始化cell的时候将其所有内容初始化完毕，在显示的时候通过显示隐藏来显示不同的效果。<br>
+3、异步操作。网络数据请求、图片加载等耗时操作可以将其放入子线程中操作，转会主线程刷新UI即刻。<br>
+4、预加载等。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://hudaqian.github.io/tag/iOS/" class="tag">
+                    iOS
+                  </a>
+                
+                  <a href="https://hudaqian.github.io/tag/iOS/" class="tag">
+                    iOS
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hudaqian.github.io/internet003/">
+                  <h3 class="post-title">
+                    Http/Https
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '70e70574c307d3e0aab1',
+        clientSecret: 'f4cac46a3ae606b5b74da444d7e6afbfbdea51d0',
+        repo: 'hudaqian.github.io',
+        owner: 'HuDaQian',
+        admin: ['HuDaQian'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

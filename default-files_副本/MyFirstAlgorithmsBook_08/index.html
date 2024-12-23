@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>重读-《我的第一本算法书》-05 查找 | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1638114699559">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="线性查找
+线性查找是在数组中从头开始依次向下查找即可，也就是遍历。
+很容易理解，缺点是在数据量大且目标数据比较靠后的时候，比较的次数会很多，就会更加耗时。
+其时间复杂度为O(n)。
+二分查找
+二分查找是通过比较数组中间的数据与目标数据的大小..." />
+    <meta name="keywords" content="算法" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1638114699559" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">重读-《我的第一本算法书》-05 查找</h2>
+            <div class="post-date">2020-12-12</div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="线性查找">线性查找</h1>
+<p>线性查找是在数组中从头开始依次向下查找即可，也就是遍历。<br>
+很容易理解，缺点是在数据量大且目标数据比较靠后的时候，比较的次数会很多，就会更加耗时。<br>
+其时间复杂度为O(n)。</p>
+<h1 id="二分查找">二分查找</h1>
+<p>二分查找是通过比较数组中间的数据与目标数据的大小来确认目标数据在数组的左边和右边，每比较一次可以排除一般的范围，重复操作到找到目标数据位置。<br>
+二分查找的话，需要已经排序好的数组，每次减半查找范围，查找到只剩一个数据的时候结束。<br>
+所以其时间复杂度为O(logn)。</p>
+<h4 id="tips二分查找的模版">Tips:二分查找的模版</h4>
+<p>模版1</p>
+<pre><code>    int binarySearch(int[] nums, int target) {
+        if (nums == null || nums.length == 0) return -1;
+        int left = 0,right = nums.length-1;
+        while (left &lt;= right) {
+            int mid = left + (right - left)/2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] &gt; target) {
+                right = mid-1;
+            } else {
+                left = mid+1;
+            }
+        }
+        return -1;
+    }
+</code></pre>
+<p>这个是二分查找的最基础和最基本的形式。查找条件可以在不与与元素的两侧进行比较的情况下确定。不需要后处理，因为每一步都检查是否查找到了元素，如果到了末尾，则知道是否找到了该元素。</p>
+<p>模版2</p>
+<pre><code>    int binarySearch(int[] nums, int target) {
+        if (nums == null || nums.length == 0) return -1;
+        int left = 0,right = nums.length;
+        while (left &lt; right) {
+            int mid = left + (right - left)/2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] &gt; target) {
+                right = mid;
+            } else {
+                left = mid+1;
+            }
+        }
+        if(left != nums.length &amp;&amp; nums[left] == target) return left;
+        return -1;
+    }
+</code></pre>
+<p>这是二分查找的一个变种，用于查找<em>需要访问数组中当前索引及其直接右邻居索引的元素或条件</em>。<br>
+查找条件需要访问元素的直接右邻居是否满足条件来确定向左还是向右，保证查找空间每一步至少有两个元素，需要进行后处理，当你只剩下一个元素的时候，循环结束，需要评估剩余元素是否符合条件。</p>
+<p>模版3</p>
+<pre><code>    int binarySearch(int[] nums, int target) {
+        if (nums == null || nums.length == 0) return -1;
+        int left = 0,right = nums.length-1;
+        while (left+1 &lt; right) {
+            int mid = left + (right - left)/2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] &gt; target) {
+                right = mid;
+            } else {
+                left = mid;
+            }
+        }
+        //  结束条件：left+1 = right
+        if(nums[left] == target) return left;
+        if(nums[riight] == target) return right;
+        return -1;
+    }
+</code></pre>
+<p>这是二分查找的另一种独特形式，用于搜索<em>需要访问当前索引及其在数组直接左右邻居索引的元素或者条件</em>。<br>
+保证每个步骤中至少需要三个元素，需要进行后处理，当剩下两个元素的时候，循环结束，需要评估其余元素是否符合条件。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://hudaqian.github.io/tag/Algorithms/" class="tag">
+                    算法
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_07/">
+                  <h3 class="post-title">
+                    Java实现一个最小堆（或者最大堆）&amp;堆排序
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '70e70574c307d3e0aab1',
+        clientSecret: 'f4cac46a3ae606b5b74da444d7e6afbfbdea51d0',
+        repo: 'hudaqian.github.io',
+        owner: 'HuDaQian',
+        admin: ['HuDaQian'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

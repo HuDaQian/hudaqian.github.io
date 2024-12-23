@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>网络分层 | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1606553410345">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="在之前的从地址栏键入了URL以后发生了什么中有对网络各个分层之间的交互举了个例子，现在总结一下。
+网络的基础分层是OSI的七层架构：应用层、表示层、会话层、传输层、网络层、数据链路层和物理层。
+
+
+Tips：OSI全称是Open Syste..." />
+    <meta name="keywords" content="网络" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1606553410345" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+    <div class="site-footer">
+      <h3>Miloy❤️Grace</h3> | <a class="rss" href="https://hudaqian.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">网络分层</h2>
+            <div class="post-date">2019-06-14</div>
+            
+            <div class="post-content" v-pre>
+              <p>在之前的<a href="https://hudaqian.github.io/post/internet001/">从地址栏键入了URL以后发生了什么</a>中有对网络各个分层之间的交互举了个例子，现在总结一下。</p>
+<p>网络的基础分层是OSI的七层架构：应用层、表示层、会话层、传输层、网络层、数据链路层和物理层。</p>
+<blockquote>
+<ul>
+<li>Tips：OSI全称是Open System<br>
+Interconnectoin（开发系统互联模型），是由国际标准化组织ISO设计，解决不同体系结构网络互相连接的问题。</li>
+</ul>
+</blockquote>
+<p>而在实际应用中，五层架构水最常见的，也是最容易理解的。网络分层后，每一层都工作着不同的协议和实际的物理设备，下一层为上一层提供服务，上层的实现无需考虑下层的细节，相同层级之间进行相互通信。![实际应用中的五层架构](https://hudaqian.github.io/post-<br>
+images/1563371324568.png)</p>
+<hr>
+<h2 id="一-物理层">一、物理层</h2>
+<p>物理层位于OSI参考模型的最底层，它直接面向实际承担数据传输的物理媒体（即通信信道），物理层的传输单位是bite，即一个二进制位。实际的比特传输必须依赖于传输设备和物理媒体，但是，物理层不是指具体的物理设别，也不是指信号传输的物理媒体，而是指在物理媒体为之上一层（数据链路层）提供一个传输原始比特流的物理链接。<br>
+现有的计算机网络中的硬件设备和传输媒体的种类非常多，而通信手段也有许多不同方式，物理层的作用正是尽可能的屏蔽掉这些差异，使物理层上边的数据链路层感觉不到这些差异，这样就可使数据链路层只需要考虑如何完成本层的协议和服务，而不必考虑网络具体的传输媒体是什么。</p>
+<p>以IEEEE802.3协议为例，物理层的一帧主要包括Header、Data和FCS三部分：</p>
+<blockquote>
+<ul>
+<li>Header：帧头部信息，包括目标地址、源地址，Data段的长度等</li>
+<li>Data：帧实际传输的数据信息</li>
+<li>FCS：校检信息</li>
+</ul>
+</blockquote>
+<p>这里Header包含的目标地址和源地址即为设备的MAC地址。</p>
+<blockquote>
+<ul>
+<li></li>
+</ul>
+<p>Tips：MAC地址也称为物理地址。用来确定一台可以联网的物理设备。MAC地址一共有48位（6个字节）。前24位由IEEE分配给厂商，后24位由厂商自己决定，这样就保证了两个网卡的MAC地址不一样。</p>
+</blockquote>
+<p>而以太网的原理则是设备A向子网里的所有设备发送数据包，所有设备的在接收到数据包之后，取出MAC地址和自己的MAC地址检查，MAC地址一致则接收，不一致则忽略。</p>
+<hr>
+<h2 id="二-数据链路层">二、数据链路层</h2>
+<p>数据链路层是OSI参考模型中的第二层，介乎于物理层和网络层之间。数据链路层在物理层提供的服务的基础上向网络层提供服务，其最基本的服务是将源自网络层来的数据可靠地传输到相邻节点的目标机网络层。数据链路层提供了物理寻址，同时将原始比特流转变为逻辑传输线路。数据链路层将有差错的物理信道变为无差错的、能可靠传输数据帧的数据链路。</p>
+<p>上面我们提到了两台设备可以通过广播进行通信。</p>
+<p>但是，不可能我在上海，你在北京，我们仍然通过广播数据包的方式进行通讯。</p>
+<p>这就引申出了子网的概念，只有在同一子网中的设备才采用广播的方式。而不同的子网之间通过网关（Gateway）连接。</p>
+<p>那么，如何在不同的网关之间寻址呢？这时候就要引入一个逻辑地址：IP地址。这里我们先不管IP地址是什么，只要知道它是一台设备的逻辑地址即可。</p>
+<p>在引入了IP地址之后，无形中又引入了一个问题：<br>
+如何从IP地址，找到设备MAC地址？数据链路层提供了IP地址到MAC地址的映射，其中ipv4采用ARP协议，ipv6采用NDP协议。</p>
+<p>ARP大致的过程是：ARP工作的时候，送出一个含有所希望的IP地址的以太网广播数据包。目的主机，或者另一个包含该主机的系统响应后，以一个含有IP地址和MAC地址的数据包进行应答。</p>
+<hr>
+<h2 id="三-网络层">三、网络层</h2>
+<p>网络层位于物联网三层结构中的第二层，其功能为“传送”，即通过通信网络进行信息传输。网络层作为纽带连接着感知层和应用层，它由各种私有网络、互联网、有线和无线通信网等组成，相当于人的神经中枢系统，负责将感知层获取的信息，安全可靠地传输到应用层，然后根据不同的应用需求进行信息处理。</p>
+<p>网络层提供了逻辑编址，分组传输，路由选择等服务，提供主机到主机之间的通信。</p>
+<p>网络层的最重要的协议就是IP协议，IP协议主要作用有两个：为每一台计算机分配一个IP地址，确定哪些地址在同一个网络中。IP协议提供的是不可靠的传输，它的优点是在网络传输的时候无需先确定一条“通路”。</p>
+<p>IP地址包括网络地址和主机地址，通过子网掩码来区分。目前应用最广泛的版本还是ipv4，ipv6正在积极部署中。<br>
+ipv4用32位（4组10进制数）来表示一个地址。<br>
+ipv6用128位（8组16进制数）来表示一个地址。</p>
+<p>ipv4数据包格式如下：<br>
+<img src="https://hudaqian.github.io/post-images/1563371780886.png" alt="ipv4数据包格式" loading="lazy"></p>
+<p>而ip的数据包是被放到物理层帧的data段里进行传输的：<br>
+![ip数据包被放入物理层每一帧的Data段](https://hudaqian.github.io/post-<br>
+images/1563371987658.png)</p>
+<hr>
+<h2 id="四-传输层">四、传输层</h2>
+<p>传输层是整个网络体系结构中的关键层次之一，主要负责向两个主机中进程之间的通信提供服务。由于一个主机同时运行多个进程，因此运输层有复用和分用的功能。传输层在终端用户之间提供透明的数据传输，向上层提供可靠的数据传输服务。传输层在给定的链路上通过流量控、分段/重组和差错控制。一些协议是面向链接的。这就意味着传输层能保持对分段的跟踪，并且重传那些失败的分段。</p>
+<p>传输层的主要任务是向上层屏蔽下层数据发送的细节，提供可靠的端到端的通信和流量控制，保证报文正确传输，提供端口到端口的通信。</p>
+<p>网络层提供的是主机到主机的通信，而同一主机上可能有不同的应用需要联网，这就是端口的作用：端口可以用来区分同一主机的不同应用。</p>
+<p>常见的工作于传输层的协议是TCP和UDP。传输层在收到应用层的数据后，在必要的时候会对数据进行切割，编号，然后交给网络层进行传输。</p>
+<p>以TCP为例，数据包格式如下：<br>
+<img src="https://hudaqian.github.io/post-images/1563372253490.png" alt="TCP中的数据包格式" loading="lazy"></p>
+<p>将其简化位Header+Data以后，整个数据包从高层到低层的结构则是：<br>
+![TCP的数据包被放入IP中的Data里](https://hudaqian.github.io/post-<br>
+images/1563372090288.png)</p>
+<hr>
+<h2 id="五-应用层">五、应用层</h2>
+<p>应用层位于物联网三层结构中的最顶层，其功能为“处理”，即通过云计算平台进行信息处理。应用层与最低端的感知层一起，是物联网的显著特征和核心所在，应用层可以对感知层采集数据进行计算、处理和知识挖掘，从而实现对物理世界的实时控制、精确管理和科学决策。</p>
+<p>物联网应用层的核心功能围绕两个方面：<br>
+一是“数据”，应用层需要完成数据的管理和数据的处理；<br>
+二是“应用”，仅仅管理和处理数据还远远不够，必须将这些数据与各行业应用相结合。<br>
+例如在智能电网中的远程电力抄表应用：安置于用户家中的读表器就是感知层中的传感器，这些传感器在收集到用户用电的信息后，通过网络发送并汇总到发电厂的处理器上。该处理器及其对应工作就属于应用层，它将完成对用户用电信息的分析，并自动采取相关措施。</p>
+<p>从结构上划分，物联网应用层包括以下三个部分：</p>
+<blockquote>
+<ul>
+<li>1． 物联网中间件：物联网中间件是一种独立的系统软件或服务程序，中间件将各种可以公用的能力进行统一封装，提供给物联网应用使用。</li>
+<li>2． 物联网应用：物联网应用就是用户直接使用的各种应用，如智能操控、安防、电力抄表、远程医疗、智能农业等等。</li>
+<li>3．<br>
+云计算：云计算可以助力物联网海量数据的存储和分析。依据云计算的服务类型可以将云分为：基础架构即服务(IaaS)、平台即服务（PaaS)、服务和软件即服务（SaaS).</li>
+</ul>
+</blockquote>
+<p>从物联网三层结构的发展来看，网络层已经非常成熟，感知层的发展也非常迅速，而应用层不管是从受到的重视程度还是实现的技术成果上，以前都落后于其他两个层面。但因为应用层可以为用户提供具体服务，是与我们最紧密相关的，因此应用层的未来发展潜力很大。</p>
+<p>应用层定义了用户于网络之间的直接接口，提供用户请求的各种服务。简单来说，应用层就是定义用户数据以什么样的格式被传输。<br>
+常见的工作在应用层的协议有：HTTP/HTTPS/FTP/SMTP等。比如HTTP是建立在TCP上的协议，那么HTTP在工作的时候数据包格式如下：<br>
+<img src="https://hudaqian.github.io/post-images/1563372128483.png" alt="HTTP工作时数据包格式" loading="lazy"></p>
+<hr>
+<hr>
+<h2 id="工作方式">工作方式</h2>
+<p>在网络分层模型中，逻辑上是同层之间进行通信的，而实际的物理连接则是通过物理层中使用的具体介质。</p>
+<p>Tips：一些解释</p>
+<h2 id="dns查询">DNS查询</h2>
+<blockquote>
+<ul>
+<li>检查域名是否在缓存里，如果在，则直接返回ip地址。</li>
+<li>如果没底没有DNS服务器或者默认网关的IP地址，采用ARP的方式对DNS/网关进行查询，获取其IP地址</li>
+<li>获得了DNS服务器或者默认网关地址后，使用 53 端口向 DNS 服务器发送 UDP 请求包，如果响应包太大，会使用 TCP 协议</li>
+<li>如果对应的DNS服务器没有找到域名对应的IP地址，则一层一层的向高层DNS进行查询，直到找到对应的ip地址</li>
+</ul>
+</blockquote>
+<h2 id="tcp连接">TCP连接</h2>
+<blockquote>
+<ul>
+<li>找到目标IP后，会尝试进行连接，连接的时候会进行三次握手，这里先不考虑握手的细节，先看下如何向服务器发送TCP请求数据包的。</li>
+<li>
+<ul>
+<li>请求的数据包先传递给传输层，在传输层请求被分装成TCP Segment，目标端口（80）会被加入头部，源端口会在系统内核内随机选取。</li>
+</ul>
+</li>
+<li>TCP Segment被送往网络层，网络层会在包中添加一个IP头部，这个头部包括了目标IP地址和源IP地址，形成了TCP Packet</li>
+<li>TCP Packet被送往链路层，链路层会在包中加入frame头部，包括了本地网卡的MAC地址和网关（本地路由器的）MAC地址。</li>
+<li></li>
+</ul>
+</blockquote>
+<h2 id="传输">传输</h2>
+<blockquote>
+<ul>
+<li></li>
+</ul>
+<p>在TCP包从本地计算机发送出去，经过调制解调器把数字信号转换为模拟信号。数据包首先到达本地字网的路由器，接着路过各种路由器，到达baidu.com的服务器。每一次经过路由器的时候，路由器会取出数据包的IP地址，通过路由选择算法找到最合适的路径，并继续传递下去。</p>
+</blockquote>
+<h2 id="响应">响应</h2>
+<blockquote>
+<ul>
+<li>服务器收到数据包后，服务器的调制解调器（或者其他设备）将模拟信号转换为数字信号，然后经由物理层 - 链路层 - 网络层 -<br>
+传输层的解析后，传输层收到了TCP的连接请求，对客户端进行响应。</li>
+</ul>
+</blockquote>
+<h2 id="数据传递">数据传递</h2>
+<blockquote>
+<ul>
+<li></li>
+</ul>
+<p>在建立TCP连接后，服务器通过TCP协议把响应HTML通过一个个TCP的数据包传输给客户端，客户端的网络层将收到的TCP数据包进行重新排序，调整后，交给应用层，至此一次HTTP请求完毕。</p>
+</blockquote>
+<p><a href="https://hudaqian.github.io/tag/internal"> 网络 </a></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://hudaqian.github.io/tag/Internal/" class="tag">
+                    网络
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hudaqian.github.io/post/DesignPatterns_ActionPattern_5/">
+                  <h3 class="post-title">
+                    设计模式之行为型模式（5）：策略模式
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '70e70574c307d3e0aab1',
+        clientSecret: 'f4cac46a3ae606b5b74da444d7e6afbfbdea51d0',
+        repo: 'hudaqian.github.io',
+        owner: 'HuDaQian',
+        admin: ['HuDaQian'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>重读-《我的第一本算法书》-07 安全算法 | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1638114699559">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="安全和算法
+通过互联网交换数据的时候，数据要经过各种各样的网络和设备才能传到对方那里。在传输过程中会经过某些恶意用户的设备，从而导致内容被盗取。
+传输数据时的四个问题：
+
+窃听
+A向B发送的消息可能会在传输过程中被X偷看，这就是“窃听”。
+..." />
+    <meta name="keywords" content="算法" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1638114699559" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">重读-《我的第一本算法书》-07 安全算法</h2>
+            <div class="post-date">2020-12-26</div>
+            
+            <div class="post-content" v-pre>
+              <h4 id="安全和算法">安全和算法</h4>
+<p>通过互联网交换数据的时候，数据要经过各种各样的网络和设备才能传到对方那里。在传输过程中会经过某些恶意用户的设备，从而导致内容被盗取。</p>
+<p>传输数据时的四个问题：</p>
+<ul>
+<li>窃听<br>
+A向B发送的消息可能会在传输过程中被X偷看，这就是“窃听”。<br>
+<img src="https://hudaqian.github.io/post-images/1609986122979.png" alt="窃听" loading="lazy"></li>
+<li>假冒<br>
+A以为向B发送的消息，然而B有可能是X冒充的；反过来，B以为从A那里收到来消息，然而A也有可能是X冒充的，这种问题就叫做“假冒”。<br>
+<img src="https://hudaqian.github.io/post-images/1609986304889.png" alt="假冒" loading="lazy"></li>
+<li>篡改<br>
+即便是B确实收到了A发送的消息，但也有可能消息内容在途中就被X更改了，这种行为就叫做“篡改”。出了被第三者篡改意外，通信故障导致的数据损坏也可能会使消息内容发生改变。<br>
+<img src="https://hudaqian.github.io/post-images/1609986454695.png" alt="篡改" loading="lazy"></li>
+<li>事后否认<br>
+B从A那里收到了消息，但作为消息发送者的A可能对B抱有恶意，并在事后声称“这不是我发送的消息”。这种情况会导致互联网上的商业交易或合同签署无法成立。这种行为便是“事后否认”。<br>
+<img src="https://hudaqian.github.io/post-images/1609987234742.png" alt="事后否认" loading="lazy"></li>
+</ul>
+<h4 id="解决问题的安全技术">解决问题的安全技术</h4>
+<p>为了应对窃听的问题，我们通常会使用加密技术。为了应对假冒的问题，我们会使用消息认证码或者数字签名技术。为了应对篡改问题，我们同样会使用消息认证码或数字签名技术，数字签名还可以预防第四个事后否认问题。而数字签名技术存在“无法确认公开密钥的制作者”这一问题，要解决这个问题，可以使用“数字证书”技术。</p>
+<h4 id="加密和解密">加密和解密</h4>
+<p>A通过互联网向B发送信息，直接发送数据的话，有可能会在传输过程中被第三者窃听，所以我们将想要保密的数据加密，加密后的数据被称为密文。B拿到密文以后，需要解密才能得到原本的数据。把密文恢复成原本数据的操作就叫做解密。</p>
+<p>首先，计算机在存储数据的时候，都是采用的二进制来表示。对计算机来说，数据就是一串有意义的数字罗列。密文也是数字罗列，只不过计算机无法理解的无规律的数字罗列，也就是说加密就是数据经过某种运算后变成计算机无法理解的无规律的数字罗列的过程。在加密运算中会用到“密钥”，所以加密就是用密钥对数据进行数值运算，把数据变成第三者无法理解的形式的过程。反过来，通过密钥进行数值计算，把密文恢复成原本数据的过程就是解密。所以，将数据变成第三者的计算机无法理解的形式，然后再将其恢复成原本数据的一系列操作就是加密技术。</p>
+<h4 id="哈希函数">哈希函数</h4>
+<p>哈希函数可以把给定的数据转化成固定长度的无规律数值。<br>
+哈希函数的特征是：<br>
+1、输出的哈希值数据长度不变。<br>
+2、如果输入的数据相同，那么输出的哈希值也必定相同。<br>
+3、即使输入的数据相似，但哪怕它们只有一比特的差别，那么输出的哈希值也会有很大的差异。<br>
+4、即使输入的两个数据完全不同，输出的哈希值也有可能是相同的，虽然出现这种情况的概率比较低。这种情况被称为“哈希冲突”。<br>
+5、不可能从哈希值反向推算出原本的数据，输入和输出不可逆。<br>
+6、求哈希值的计算相对容易。</p>
+<p>哈希函数的算法中具有代表性的是MD5、SHA-1、SHA-2等。<br>
+不同的算法的计算方式会有所不同，比如SHA-1需要经过数百次的加法和移位运算才能声称哈希值。<br>
+虽然特征是如果输入的数据相同，那么输出的哈希值也必定相同，但这是在使用同一个算法的前提下。如果使用的算法不同，那么就算输入的数据相同，得到的哈希值也不同。</p>
+<p>应用：服务器中用户密码的保存。即便该哈希值被窃听，但是输入输出不可逆，第三者也无法得知原本的密码。</p>
+<h4 id="共享密钥加密">共享密钥加密</h4>
+<p>加密数据的方法分为两种：加密和解密都使用相同密钥的“共享密钥加密” 和分别使用不同密钥的“公开密钥加密”。</p>
+<p>共享密钥加密由于加密解密使用的密钥相同，所以这种算法也被称为对称加密。<br>
+共享密钥加密的问题是，密钥有被第三者窃听的风险，也就是密钥分配问题，要想解决这个问题，可以使用密钥交换协议和公开密钥加密这两种方法。</p>
+<h4 id="公开密钥加密">公开密钥加密</h4>
+<p>公开密钥加密也叫做非对称加密，加密用的密钥叫做公开密钥，解密用的密钥叫做私有密钥。<br>
+具体操作是，先有接收方B来生成公开密钥和私有密钥，然后把公开密钥发送给A，然后A使用公开密钥加密数据并将其传输给B，然后B使用私有密钥对密文进行解密。</p>
+<p>这样在多人传输中，只需要生成一堆密钥即可，然后共享公开密钥给所有的发送方，不需要为每个发送对象都准备相应的密钥了。</p>
+<p>不过公开密钥也存在公开密钥可靠性的问题，即在B共享公开密钥给发送方A的时候，在这个过程中，公开密钥Pb被X窃取并替换成X自己的公开密钥Px，这时候，由于公开密钥无法确认是谁产生的，所以A不知道公开密钥已经被替换，A加密并传输出来的密文再被X截取，X就可以使用自己的私有密钥解密，再用B的公开密钥加密，最后发送给B，B也无法意识到数据已经被窃听。这种中途替换公开密钥来窃听传输的攻击方法被称为中间人攻击。<br>
+Tips：公开密钥的可靠性问题，是因为A无法判断收到的公开密钥是否来自于B。要解决这个问题，就要用到数字证书。公开密钥加密还有一个问题就是加密和解密都比较费时，所以这种方法不适用于持续发送零碎数据的情况。要解决这个问题就要用到混合加密（也就是公开密钥加密共享密钥加密的共享密钥）。</p>
+<h4 id="混合加密">混合加密</h4>
+<p>A要传输数据给B，首先，B先生成一对公开密钥Pb和私有密钥Sb，然后把公开密钥共享给A，A接收到公开密钥之后，将共享密钥Sha用Pb加密，然后发送给B，B接收到密文以后，使用Sb解密获得共享密钥，然后再对共享密钥加密的密文进行解密即可。</p>
+<p>应用：混合加密在安全性和处理速度上都有优势，能够为网络提供通信安全的SSL协议也应用的混合加密的方法。该协议经过版本升级以后，现在正式更名为TLS，所以该协议现在被称为SSL协议 或者 SSL/TLS协议。</p>
+<h4 id="迪菲-赫尔曼-密钥交换">迪菲 - 赫尔曼 密钥交换</h4>
+<p>迪菲 - 赫尔曼密钥交换是一种可以在通信双方之间安全交换密钥的方法。这种方法将双方共有的秘密数值隐藏在公开数值相关的运算中，来实现双方之间密钥的安全交换。</p>
+<p>思路是假设有一种方法可以合成两个密钥，使用这种方法合成密钥P和密钥S，就会得到由这两个密钥的成分所构成的密钥PS。即使持有密钥P和合成的密钥P-S，也无法把密钥S单独取出来。不管怎么样合成而来的密钥，都可以把它作为新的元素，继续和别的密钥进行合成。密钥的合成结果与合成顺序无关，只与用了哪些密钥相关。A-B-C 和B-C-A是一样的。</p>
+<p>具体做法是A想和B相互传输信息，先由A生成密钥P，然后将P发送给B。接下来，A和B各自准备自己的私有密钥SA和SB，然后A利用P和SA合成新的密钥P-SA，B也利用P和SB合成新的密钥P-SB，A将密钥P-SA发送给B，<br>
+B也将密钥P-SB发送给A，A将自己的私有密钥SA和B发送来的密钥P-SB合成新的密钥P-SB-SA，B也将自己的私有密钥SB和A发送来的密钥P-SA合成新的密钥P-SA-SB。这个新的密钥就可以作为加密密钥和解密密钥来使用。假设传输过程中数据都被窃听，那么窃听者X只能得到P P-SA P-SB，由于密钥无法被分解，所以无法合成出新的密钥P-SA-SB。</p>
+<p>而其关键原理是根据素数P、生成元G^X mod P'' 求出X的问题，就是离散对数问题至今还未找到解决方案，而迪菲 - 赫尔曼密钥交换就是利用这个数学难题。</p>
+<p>使用迪菲 - 赫尔曼密钥交换，通信双方仅仅通过交换了一些公开信息就可以实现密钥交换。但实际上，双方并没有交换密钥，而是生成了密钥。因此。该方法又被叫做 迪菲 - 赫尔曼 密钥协议。</p>
+<h4 id="消息认证码">消息认证码</h4>
+<p>消息认证码可以实现“认证” 和 “检测篡改” 这两个功能。<br>
+在AB进行通信的时候，首先A通过安全的方法将密钥发送给了B，然后A对信息进行加密，发送给B，如果在传输过程中被X恶意篡改，B收到密文的时候可能没有意识到这个问题，解密出错误信息。<br>
+如果使用消息认证码，A在传输之前除了加密了消息生成密文以外，还将密文和密钥生成了一个新的值，这个由密钥和密文生成的值就是消息认证码。消息经过X篡改之后，B接收到消息以后解密，发现消息认证码不对，就可以直到密文或者消息认证码（MAC）或者两者都遭到了篡改，可以废弃收到的信息，然后向A提出再次发送请求。因为X没有密钥，所以无法对MAC进行篡改，所以只要使用消息认证码，就能预防通信过程中的篡改行为。</p>
+<p>Tips：加密仅仅是一个数值计算和处理的过程，所以即使密文被篡改了，也能够进行解密相关的计算。</p>
+<p>然而，这种方法也有缺点。在使用消息认证码的过程中，AB双方都可以对消息进行加密并且计算出MAC，也就是说我们无法证明原本的信息是由A产生的还是B产生的。所以，处理这个问题，我们可以使用数字签名来解决。</p>
+<h4 id="数字签名">数字签名</h4>
+<p>数字签名使用的是公开密钥加密。A准备好需要发送的信息、私有密钥和公开密钥，然后将公开密钥发送给B，A使用私有密钥加密信息，加密后的信息就是数字签名，A将消息和签名都发送给B，B使用公开密钥对密文进行解密，B对解密后的消息进行确认，看它是否和收到的消息一致。能够用A的公开密钥解密的密文。必定是A生成的，所以我们可以利用这个结论来确认消息的发送者是否是A，消息是否被人篡改。<br>
+由于B只有公开密钥，无法生成A的签名，所以也预防了“事后否认”这一问题的发生。</p>
+<p>Tips：公开密钥加密的加密和解密都比较耗时，为了节约时间，实际上不会对消息直接进行加密，而是先求得消息的哈希值，再对哈希值进行加密，然后将其作为签名来使用。</p>
+<p>虽然数字签名可以实现“认证”、“检测篡改” 和“预防事后否认”三个功能，但它也有一个缺陷。就是虽然使用数字签名后B会相信消息的发送者就是A，但实际上也有可能是X冒充了A，根本原因就在于公开密钥加密无法确定公开密钥的制作者是谁，收到的公开密钥上也没有任何制作者的信息。要解决这个问题，需要使用“数字证书”。</p>
+<h4 id="数字证书">数字证书</h4>
+<p>A持有公开密钥Pa 和私有密钥 Sa，想将公开密钥Pa发送给B，首先向认证中心CA申请发行证书，证明公开密钥Pa确实由自己生成。认证中心保管者他们自己准备的公开密钥Pc和私有密钥Sc。A将公开密钥Pa和包含邮箱信息的个人资料发送给认证中心。认证中心确认，确认完毕以后，认证中心使用自己的私有密钥Sc，根据A的资料生成数字签名，然后将文件发送给A，这个文件就是A的数字证书。然后A将作为公开密钥的数字证书发送给B，B收到数字证书以后，确认证书里的邮件地址确实是A的地址，然后获取认证中心的公开密钥Pc，对证书里的签名进行认证。如果验证没有异常，那就说明这份证书确由认证中心发行。确认了证书以后，使用Pc对证书解密，取出A的公开密钥Pa，这样公开密钥就从A传到了B。</p>
+<p>这样X无法直接发送自己的公开密钥给B，X也无法从CA直接生成A的证书让B信任。<br>
+通过数字证书，信息的接收者可以确认公开密钥的制作者。</p>
+<p>Tips：网站之间的通信中同样也要用到数字证书，只要能收到网站的含有公开密钥的证书，就能确认该网站未被第三者冒充。这里的证书叫做“服务器证书”，同样由认证中心发行。个人的证书会与它的邮箱信息对应，而服务器证书会与域名信息对应。因此，我们还可以确认网站域名和存储网站本身内容的服务器是由一个组织来管理的。数字证书就是像这样通过认证中心来担保公开密钥的制作者。这一系列技术规范被统称为“公钥基础设施PKI”。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://hudaqian.github.io/tag/Algorithms/" class="tag">
+                    算法
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_09/">
+                  <h3 class="post-title">
+                    重读-《我的第一本算法书》-06 图的搜索
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '70e70574c307d3e0aab1',
+        clientSecret: 'f4cac46a3ae606b5b74da444d7e6afbfbdea51d0',
+        repo: 'hudaqian.github.io',
+        owner: 'HuDaQian',
+        admin: ['HuDaQian'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

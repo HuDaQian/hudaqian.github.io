@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>并查集基础和常规实现方法 | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1638114699559">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="并查集是一种树形数据结构，用来处理一些不想交集合的合并和查询操作。
+- 并（Union），代表合并,将两个子集合并成一个集合。
+- 查（Find），代表查找，确定元素属于哪一个子集。
+- 集（Set），代表它的基本功能是合并集合中的元素，查..." />
+    <meta name="keywords" content="算法" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1638114699559" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">并查集基础和常规实现方法</h2>
+            <div class="post-date">2021-01-01</div>
+            
+            <div class="post-content" v-pre>
+              <p>并查集是一种树形数据结构，用来处理一些不想交集合的合并和查询操作。<br>
+- 并（Union），代表合并,将两个子集合并成一个集合。<br>
+- 查（Find），代表查找，确定元素属于哪一个子集。<br>
+- 集（Set），代表它的基本功能是合并集合中的元素，查找集合中的元素</p>
+<p>并查集的数据结构和树类似，不过和树不同的是，树的每个节点会记录它的子节点，而在并查集里，它的节点会记录它的父节点。</p>
+<p>对于一组数据来说，并查集主要支持两个动作</p>
+<ul>
+<li>union(x, y)</li>
+<li>find(x)<br>
+用来回答一个问题</li>
+<li>isConnected(x, y)</li>
+</ul>
+<p>我们把一组数据用数据来表示，数组的索引代表该元素，索引对应的值来代表该元素所对应的集合编号。<br>
+<img src="https://hudaqian.github.io/post-images/1610272124976.png" alt="示例" loading="lazy"></p>
+<p>所以，我们要实现一个并查集的类，基础数据为</p>
+<ul>
+<li>int[] parents;</li>
+</ul>
+<p>构造函数为</p>
+<pre><code>        public UnionFind(int n) {
+            this.parents = new int[n];
+            for (int i = 0; i &lt; n; i++) {
+                parents[i] = i;
+            }
+        }
+</code></pre>
+<p>这样构造完成之后，每个元素都位于它自己所在的集合里。<br>
+<img src="https://hudaqian.github.io/post-images/1610272050506.png" alt="初始化" loading="lazy"><br>
+此时的find函数为</p>
+<pre><code>        public int find(int x) {
+            assert (x&lt;0 || x &gt;= parents.length);
+            return parents[x];
+        }
+</code></pre>
+<p>而isConnected函数则为</p>
+<pre><code>        public boolean isConnected(int x, int y) {
+            return find[x] == find[y];
+        }
+</code></pre>
+<p>对于union函数，两个集合如果想合并成一个集合，那么他们集合编号应该相同，所以我们将任意一方的集合编号修改为另一方的集合编号就可以了。</p>
+<pre><code>       public void union(int x, int y) {
+            int xRoot = find(x);
+            int yRoot = find(y);
+            if (xRoot == yRoot) {
+                return;
+            } else {
+                int len = parents.length;
+                for (int i = 0; i &lt; len; i++) {
+                    if (parents[i] == yRoot) {
+                        parents[i] = xRoot;
+                    }
+                }
+            }
+        }
+</code></pre>
+<p>这么看起来，每次合并都要遍历一边数组，效率非常低，所以我们调整一下，每个元素的索引还是代表它自身，但是这个元素代表着它的父节点，x = parents[i] 就表示 x是i的父节点，而父节点是自身的节点就是根节点。查询操作调整为查询其根节点，合并操作则调整为把一个集合的根节点指向另一个集合的根节点作为父节点。<br>
+<img src="https://hudaqian.github.io/post-images/1610272246043.png" alt="节点指向父节点" loading="lazy"><br>
+上图对应的就是下边的集合合集。<br>
+<img src="https://hudaqian.github.io/post-images/1610273071206.png" alt="集合结构" loading="lazy"></p>
+<p>这时，find函数为</p>
+<pre><code>        public int find(int x) {
+            assert (x&lt;0 || x &gt;= parents.length);
+            while(x != parents[x]) {
+                x = parents[x];
+            }
+            return parents[x];
+        }
+</code></pre>
+<p>相应的 union也需要调整一下</p>
+<pre><code>       public void union(int x, int y) {
+            int xRoot = find(x);
+            int yRoot = find(y);
+            if (xRoot == yRoot) {
+                return;
+            } else {
+                parents[yRoot] = xRoot;
+            }
+        }
+</code></pre>
+<p>而检查两个数是否在一个集合内的函数不需要调整。</p>
+<h4 id="基于size或者rank优化">基于Size或者Rank优化</h4>
+<p>这里考虑一下特殊情况。<br>
+如果已有的两个集合如下图所示<br>
+<img src="https://hudaqian.github.io/post-images/1610282916499.png" alt="特例1" loading="lazy"><br>
+按照之前的写法，将两个集合合并起来的时候，是将4这个节点指向1这个节点，看起来没什么问题，如果换一种情况<br>
+<img src="https://hudaqian.github.io/post-images/1610283041912.png" alt="特例2" loading="lazy"><br>
+这样，合并完成之后就变成了 0 - 1 - 2 - 3，如果还有更多的话，这条链就会一直增长下去，这样在我们执行find函数查找链末端元素的时候，它要从底部往上查找很多次才能查到。<br>
+所以，我们找到了一种优化的方法。<br>
+引入了一个size的数组，用来记录这个集合里现在有多少元素，然后在合并的时候，我们借用Size数组来查询需要合并的两个集合当中哪一个集合中的元素个数比较少，就可以把Size数小的集合并入Size数大的集合当中去。<br>
+在基础数据中增加一个数组</p>
+<ul>
+<li>int[] size;<br>
+在初始化的时候，将size的默认值设定成1</li>
+</ul>
+<pre><code>        public UnionFind(int n) {
+            this.parents = new int[n];
+            for (int i = 0; i &lt; n; i++) {
+                parents[i] = i;
+                size[i] = 1;
+            }
+        }
+</code></pre>
+<p>然后在合并的时候，判断并修改相应的size值</p>
+<pre><code>        public void union(int x, int y) {
+            int xRoot = find(x);
+            int yRoot = find(y);
+            if (xRoot == yRoot) {
+                return;
+            } else {
+                if (size[xRoot] &gt; size[yRoot]) {                 
+                    parents[yRoot] = xRoot;   
+                    size[xRoot] += size[yRoot];
+                } else {
+                    parents[xRoot] = yRoot;
+                    size[yRoot] += size[xRoot];
+                }
+            }
+        }
+</code></pre>
+<p>当然，这种优化有时候也会满足不了我们的需求，比如，碰到以下这种情况<br>
+<img src="https://hudaqian.github.io/post-images/1610283979175.png" alt="特例3" loading="lazy"><br>
+这种时候，如果按照size来合并的话，结果如下<br>
+<img src="https://hudaqian.github.io/post-images/1610284063005.png" alt="特例3-1" loading="lazy"><br>
+这个时候，我们如果使用find函数查询9的根的话，我们需要查询4次，可是，如果我们反过来，让前面的集合合并到后边的集合上<br>
+<img src="https://hudaqian.github.io/post-images/1610284222211.png" alt="特例3-2" loading="lazy"><br>
+我们查询最下边的节点9，只需要查询3次，所以我们又有了一种优化思路，根据“树高”来优化，我们不再使用size数组了，而是增加一个rank数组来保存集合的高度。这时候，和size不同的是，我们不需要在每次合并的时候都要调整数组数据，因为矮一点的树向高一点的树合并的时候，高一点的树的高度并没有改变，当且仅当两个树高度一样的时候，我们才需要调整一颗树的高度，让另一颗树合并过来。<br>
+新增数组</p>
+<ul>
+<li>int[] rank;<br>
+我们初始化的时候，</li>
+</ul>
+<pre><code>            public UnionFind(int n) {
+            this.parents = new int[n];
+            for (int i = 0; i &lt; n; i++) {
+                parents[i] = i;
+                rank[i] = 1;
+            }
+        }
+</code></pre>
+<p>合并的函数也要进行调整</p>
+<pre><code>        public void union(int x, int y) {
+            int xRoot = find(x);
+            int yRoot = find(y);
+            if (xRoot == yRoot) {
+                return;
+            } else {
+                if (rank[xRoot] &gt; rank[yRoot]) {                 
+                    parents[yRoot] = xRoot;   
+                } else if (rank[yRoot] &gt; rank[xRoot]) {
+                    parents[xRoot] = yRoot;
+                } else {
+                    parents[xRoot] = yRoot;
+                    rank[yRoot]++;
+                }
+            }
+        }
+</code></pre>
+<p>如果我们通过大量测试的话，就会发现，基于Rank优化的时间会比基于Size优化的时间稍微长一点，这是因为前者多一层判断的缘故，但是却排除了一些极端情况，综合来看，还是基于Rank优化更好一点。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://hudaqian.github.io/tag/Algorithms/" class="tag">
+                    算法
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_11/">
+                  <h3 class="post-title">
+                    重读-《我的第一本算法书》-08 其它算法
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '70e70574c307d3e0aab1',
+        clientSecret: 'f4cac46a3ae606b5b74da444d7e6afbfbdea51d0',
+        repo: 'hudaqian.github.io',
+        owner: 'HuDaQian',
+        admin: ['HuDaQian'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>iOS13部分适配 | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1638114699559">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="私有KVC
+[self setValue:baseTabBar forKey:@&quot;tabBar&quot;]; //正常
+[_textField setValue:[UIColor redColor] forKeyPath:@&q..." />
+    <meta name="keywords" content="iOS,iOS" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1638114699559" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">iOS13部分适配</h2>
+            <div class="post-date">2019-09-09</div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="私有kvc"><code>私有KVC</code></h1>
+<pre><code>[self setValue:baseTabBar forKey:@&quot;tabBar&quot;]; //正常
+[_textField setValue:[UIColor redColor] forKeyPath:@&quot;_placeholderLabel.textColor&quot;];///崩溃
+[_textField setValue:[UIFont systemFontOfSize:14] forKeyPath:@&quot;_placeholderLabel.font&quot;];///崩溃
+
+_textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@&quot;姓名&quot; attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:[UIColor redColor]}]; ///新的实现
+</code></pre>
+<p>在Xcode10上编译不会有问题，但是在Xcode11上编译的会崩溃。并且- (void)setValue:(nullable id)value<br>
+forKey:(NSString *)key方法没问题，- (void)setValue:(nullable id)value<br>
+forKeyPath:(NSString *)keyPath会崩溃</p>
+<h1 id="presentviewcontroller的问题"><code>presentViewController的问题</code></h1>
+<p>会出现这种情况是主要是因为我们之前对UIViewController里面的一个属性，即modalPresentationStyle（该属性是控制器在模态视图时将要使用的样式）没有设置需要的类型。在iOS13中modalPresentationStyle的默认改为UIModalPresentationAutomatic,而在之前默认是UIModalPresentationFullScreen。<br>
+这个不受Xcode版本的影响，只要是iOS13的系统，没有显式设置modalPresentationStyle，就会有这个问题</p>
+<h1 id="即将废弃的-launchimage"><code>即将废弃的 LaunchImage</code></h1>
+<p>从 iOS 8 的时候，苹果就引入了 LaunchScreen，我们可以设置<br>
+LaunchScreen来作为启动页。当然，现在你还可以使用LaunchImage来设置启动图。不过使用LaunchImage的话，要求我们必须提供各种屏幕尺寸的启动图，来适配各种设备，随着苹果设备尺寸越来越多，这种方式显然不够<br>
+Flexible。而使用 LaunchScreen的话，情况会变的很简单，<br>
+LaunchScreen是支持AutoLayout+SizeClass的，所以适配各种屏幕都不在话下。 注意啦⚠️，从2020年4月开始，所有使⽤<br>
+iOS13 SDK 的 App 将必须提供 LaunchScreen，LaunchImage即将退出历史舞台</p>
+<h1 id="暗黑模式"><code>暗黑模式</code></h1>
+<blockquote>
+<p>原理</p>
+</blockquote>
+<ul>
+<li>1.将同一个资源，创建出两种模式的样式。系统根据当前选择的样式，自动获取该样式的资源</li>
+<li>2.每次系统更新样式时，应用会调用当前所有存在的元素调用对应的一些重新方法，进行重绘视图，可以在对应的方法做相应的改动</li>
+</ul>
+<blockquote>
+<p>资源文件适配</p>
+</blockquote>
+<ol>
+<li>创建一个Assets文件（或在现有的Assets文件中）</li>
+<li>新建一个图片资源文件（或者颜色资源文件、或者其他资源文件）</li>
+<li>选中该资源文件， 打开 Xcode -&gt;View -&gt;Inspectors -&gt;Show Attributes Inspectors （或者Option+Command+4）视图，将Apperances 选项 改为Any，Dark</li>
+<li>执行完第三步，资源文件将会有多个容器框，分别为 Any Apperance 和 Dark Apperance. Any Apperance 应用于默认情况（Unspecified）与高亮情况（Light）， Dark Apperance 应用于暗黑模式（Dark）</li>
+<li>代码默认执行时，就可以正常通过名字使用了，系统会根据当前模式自动获取对应的资源文件</li>
+</ol>
+<blockquote>
+<p>注意</p>
+</blockquote>
+<p>同一工程内多个Assets文件在打包后，就会生成一个Assets.car 文件，所以要保证Assets内资源文件的名字不能相同</p>
+<p>UIView</p>
+<blockquote>
+<p>traitCollectionDidChange( _😃<br>
+layoutSubviews()<br>
+draw(_😃<br>
+updateConstraints()<br>
+tintColorDidChange()</p>
+</blockquote>
+<p>UIViewController</p>
+<blockquote>
+<p>traitCollectionDidChange(_😃<br>
+updateViewConstraints()<br>
+viewWillLayoutSubviews()<br>
+viewDidLayoutSubviews()</p>
+</blockquote>
+<p>UIPresentationController</p>
+<blockquote>
+<p>traitCollectionDidChange(_😃<br>
+containerViewWillLayoutSubviews()<br>
+containerViewDidLayoutSubviews()</p>
+</blockquote>
+<blockquote>
+<p>全局关闭黑暗模式</p>
+</blockquote>
+<ul>
+<li>方式一 配置plist文件： 在Info.plist 文件中，添加UIUserInterfaceStyle key 名字为 User Interface Style 值为String，将UIUserInterfaceStyle key 的值设置为 Light</li>
+</ul>
+<p>在开发中，如果用的系统控件（如cell、tableview的背景色）未设置背景色（或者为透明），则进入暗黑模式后，控件背景色变为黑色。可以每一个页面设置，当然也可以整体设置，一般我们的APP都是在一个window下的，那就整体设置APP里的window</p>
+<ul>
+<li>
+<p>方式二 ：代码关闭黑暗模式 强制关闭暗黑模式</p>
+<p>#if defined(__IPHONE_13_0) &amp;&amp; __IPHONE_OS_VERSION_MAX_ALLOWED &gt;= __IPHONE_13_0<br>
+if(@available(iOS 13.0,*)){<br>
+self.window.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;<br>
+}<br>
+#endif</p>
+</li>
+</ul>
+<p>单个界面不遵循暗黑模式</p>
+<ol>
+<li>
+<p>UIViewController与UIView 都新增一个属性 overrideUserInterfaceStyle</p>
+</li>
+<li>
+<p>将 overrideUserInterfaceStyle 设置为对应的模式，则强制限制该元素与其子元素以设置的模式进行展示，不跟随系统模式改变进行改变</p>
+<pre><code>1. 设置 ViewController 的该属性， 将会影响视图控制器的视图和子视图控制器采用该样式
+</code></pre>
+<ol start="2">
+<li>设置 View 的该属性， 将会影响视图及其所有子视图采用该样式</li>
+<li>设置 Window 的该属性， 将会影响窗口中的所有内容都采用样式，包括根视图控制器和在该窗口中显示内容的所有演示控制器（UIPresentationController）</li>
+</ol>
+</li>
+</ol>
+<h1 id="增加一直使用蓝牙的权限申请"><code>增加一直使用蓝牙的权限申请</code></h1>
+<p>CBCentralManager，iOS13以前，使用蓝牙时可以直接用，不会出现权限提示，iOS13后，再使用就会提示了。<br>
+在info.plist里增加</p>
+<pre><code>&lt;key&gt;NSBluetoothAlwaysUsageDescription&lt;/key&gt; 
+&lt;string&gt;我们要一直使用您的蓝牙，具体做什么别问我&lt;/string&gt;`
+</code></pre>
+<h1 id="使用mjextension-中处理nsnull的不同"><code>使用MJExtension 中处理NSNull的不同</code></h1>
+<p>这个直接会导致Crash的在将服务端数据字典转换为模型时，如果遇到服务端给的数据为NSNull时，<br>
+mj_JSONObject，其中<br>
+class_copyPropertyList方法得到的属性里，多了一种EFSQLBinding类型的东西，而且属性数量也不准确，<br>
+那就没办法了，只能改写这个方法了，这个组件没有更新的情况下，写了一个方法swizzling掉把当遇到 NSNull时，直接转为nil了。</p>
+<h1 id="wkwebview-中测量页面内容高度的方式变更"><code>WKWebView 中测量页面内容高度的方式变更</code></h1>
+<p>iOS 13以前<br>
+document.body.scrollHeight<br>
+iOS 13中<br>
+document.documentElement.scrollHeight<br>
+两者相差55 应该是浏览器定义高度变了</p>
+<h1 id="友盟消息推送获取devicetoken适配"><code>友盟消息推送，获取deviceToken适配</code></h1>
+<pre><code>- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+   if (![deviceToken isKindOfClass:[NSData class]]) return;
+      const unsigned *tokenBytes = (const unsigned *)[deviceToken bytes];
+      NSString *hexToken = [NSString stringWithFormat:@&quot;%08x%08x%08x%08x%08x%08x%08x%08x&quot;,ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]),ntohl(tokenBytes[6]),ntohl(tokenBytes[7])];
+      pushDeviceToken = hexToken;
+      NSLog(@&quot;deviceToken:%@&quot;,hexToken);
+}
+</code></pre>
+<h1 id="statusbar-与之前版本不同"><code>StatusBar 与之前版本不同</code></h1>
+<p>目前状态栏也增加了一种模式，由之前的两种，变成了三种,<br>
+其中default由之前的黑色内容，变成了会根据系统模式，自动选择当前展示lightContent还是darkContent</p>
+<p><a href="https://hudaqian.github.io/tag/iOS"> iOS </a></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://hudaqian.github.io/tag/iOS/" class="tag">
+                    iOS
+                  </a>
+                
+                  <a href="https://hudaqian.github.io/tag/iOS/" class="tag">
+                    iOS
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hudaqian.github.io/Primary_Mid_17/">
+                  <h3 class="post-title">
+                    拆读《小狗钱钱》
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '70e70574c307d3e0aab1',
+        clientSecret: 'f4cac46a3ae606b5b74da444d7e6afbfbdea51d0',
+        repo: 'hudaqian.github.io',
+        owner: 'HuDaQian',
+        admin: ['HuDaQian'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

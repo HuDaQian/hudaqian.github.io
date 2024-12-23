@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>从地址栏键入了URL以后发生了什么 | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1606553410345">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+Tips：HTTP协议栈      
+1. 应用层 &lt; HTTP协议 &gt;
+2.  传输层 &lt; TCP/IP协议 &gt;
+3.  网络层 &lt; IP协议 &gt;
+4.  数据链路层 &lt; 网络特有的链路端口 &..." />
+    <meta name="keywords" content="网络" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1606553410345" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+    <div class="site-footer">
+      <h3>Miloy❤️Grace</h3> | <a class="rss" href="https://hudaqian.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">从地址栏键入了URL以后发生了什么</h2>
+            <div class="post-date">2019-02-22</div>
+            
+            <div class="post-content" v-pre>
+              <hr>
+<pre><code>Tips：HTTP协议栈      
+1. 应用层 &lt; HTTP协议 &gt;
+2.  传输层 &lt; TCP/IP协议 &gt;
+3.  网络层 &lt; IP协议 &gt;
+4.  数据链路层 &lt; 网络特有的链路端口 &gt;
+5.  物理层 &lt; 物理网络硬件 &gt;
+</code></pre>
+<hr>
+<p>请求阶段</p>
+<ol>
+<li>
+<p>键入URL</p>
+</li>
+<li>
+<p>应用层DNS解析域名</p>
+</li>
+</ol>
+<p>客户端先检查本地是否有对应的IP地址，若找到则返回响应的IP地址。若没找到则请求上级DNS服务器，直至找到或到根节点。</p>
+<p>完成以后的效果：<br>
+<img src="https://hudaqian.github.io/post-images/1550802280555.png" alt="ping百度" loading="lazy"></p>
+<p>www.baidu.com就是百度的域名，119.75.216.20就是百度的ip，如果服务器没有修改端口号的话，http协议默认的端口号是80，也就是转换成119.75.216.20:80</p>
+<p>DNS查找过程 浏览器缓存 –<br>
+浏览器会缓存DNS记录一段时间。有趣的是，操作系统没有告诉浏览器储存DNS记录的时间，这样不同浏览器会储存个自固定的一个时间（2分钟到30分钟不等）。<br>
+系统缓存 – 如果在浏览器缓存里没有找到需要的记录，浏览器会做一个系统调用（windows里是gethostbyname）。这样便可获得系统缓存中的记录。<br>
+路由器缓存 – 接着，前面的查询请求发向路由器，它一般会有自己的DNS缓存。 ISP DNS 缓存 –<br>
+接下来要check的就是ISP缓存DNS的服务器。在这一般都能找到相应的缓存记录。 递归搜索 –<br>
+你的ISP的DNS服务器从跟域名服务器开始进行递归搜索，从.com顶级域名服务器到Facebook的域名服务器。一般DNS服务器的缓存中会有.com域名服务器中的域名，所以到顶级服务器的匹配过程不是那么必要了。<br>
+什么是DNS: DNS（Domain Name System）位于应用层，提供域名和IP地址之间的解析服务。</p>
+<p>3.应用层客户端发送HTTP请求</p>
+<p>HTTP请求包括请求报头和请求主体两个部分，其中请求报头包含了至关重要的信息，包括请求的方法（GET /<br>
+POST）、目标url、遵循的协议（http / https / ftp …），返回的信息是否需要缓存，以及客户端是否发送cookie等。</p>
+<p>4.传输层TCP传输报文</p>
+<p>位于传输层的TCP协议为传输报文提供可靠的字节流服务。</p>
+<p>它为了方便传输，将大块的数据分割成以报文段为单位的数据包进行管理，并为它们编号，方便服务器接收时能准确地还原报文信息。TCP协议通过“三次握手”等方法保证传输的安全可靠。</p>
+<p>“三次握手”的过程是，发送端先发送一个带有SYN（synchronize）标志的数据包给接收端，在一定的延迟时间内等待接收的回复。接收端收到数据包后，传回一个带有SYN/ACK标志的数据包以示传达确认信息。接收方收到后再发送一个带有ACK标志的数据包给接收端以示握手成功。在这个过程中，如果发送端在规定延迟时间内没有收到回复则默认接收方没有收到请求，而再次发送，直到收到回复为止。</p>
+<p>关于第一行文字的说明： HTTP 是个应用层协议。HTTP 无需操心网络通信的具体细节；它把联网的细节都交给了通用、可靠的因特网传输协议<br>
+TCP/IP。 TCP 提供了：<br>
+1.无差错的数据传输；<br>
+2.按序传输（数据总是会按照发送的顺序到达）；<br>
+3.未分段的数据流（可以在任意时刻以任意尺寸将数据发送出去）。 因特网自身就是基于 TCP/IP 的，TCP/IP<br>
+是全世界的计算机和网络设备常用的层次化分组交换网络协议集。TCP/IP<br>
+隐藏了各种网络和硬件的特点及弱点，使各种类型的计算机和网络都能够进行可靠地通信。只要建立了 TCP<br>
+连接，客户端和服务器之间的报文交换就不会丢失、不会被破坏，也不会在接收时出现错序了。</p>
+<p>5.网络层IP查询MAC地址</p>
+<p>IP协议的作用是把TCP分割好的各种数据包传送给接收方。而要保证确实能传到接收方还需要接收方的MAC地址，也就是物理地址。IP地址和MAC地址是一一对应的关系，一个网络设备的IP地址可以更换，但是MAC地址一般是固定不变的。ARP协议可以将IP地址解析成对应的MAC地址。当通信的双方不在同一个局域网时，需要多次中转才能到达最终的目标，在中转的过程中需要通过下一个中转站的MAC地址来搜索下一个中转目标。<br>
+PC -&gt; 路由器 -&gt; 运营商（ISP）服务器 -&gt;<br>
+目标服务器，每个节点都有在该局域网或网络环境下的IP地址，mac地址一般是固定的。路由器是第三层网络层，交换机是第二层数据链路层，网卡是第一层物理层。</p>
+<p>6.数据到达数据链路层</p>
+<p>在找到对方的MAC地址后，就将数据发送到数据链路层传输。这时，客户端发送请求的阶段结束</p>
+<p>7.服务器接收请求</p>
+<p>接收端的服务器在链路层接收到数据包，再层层向上直到应用层。这过程中包括在运输层通过TCP协议讲分段的数据包重新组成原来的HTTP请求报文。</p>
+<p>8.服务器响应请求</p>
+<p>服务接收到客户端发送的HTTP请求后，查找客户端请求的资源，并返回响应报文，响应报文中包括一个重要的信息——状态码。状态码由三位数字组成，其中比较常见的是200<br>
+OK表示请求成功。301表示永久重定向，即请求的资源已经永久转移到新的位置。在返回301状态码的同时，响应报文也会附带重定向的url，客户端接收到后将http请求的url做相应的改变再重新发送。404<br>
+not found 表示客户端请求的资源找不到。</p>
+<p>301的用途 301返回的时候，会附带一个URL，浏览器拿到新的URL跟状态码301以后，会用新的URL重新做一次请求。<br>
+www.baidu.com/baidu.com<br>
+搜索引擎会认为这是两个网站，造成每个搜索链都减少而降低排名。但是搜索引擎知道301的意思，可以将两个URL放到同一个网站排名下。</p>
+<p>9.服务器返回文件</p>
+<p>请求成功后，服务器会返回相应的HTML文件。接下来就到了页面的渲染阶段了</p>
+<p>页面渲染阶段 解析HTML以构建DOM树 –&gt; 构建渲染树 –&gt; 布局渲染树 –&gt; 绘制渲染树<br>
+DOM树是由HTML文件中的标签排列组成，渲染树是在DOM树中加入CSS或HTML中的style样式而形成。渲染树只包含需要显示在页面中的DOM元素，像</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://hudaqian.github.io/tag/Internal/" class="tag">
+                    网络
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hudaqian.github.io/post/spirit001/">
+                  <h3 class="post-title">
+                    有时候，失去了，蓦然间又重拾
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '70e70574c307d3e0aab1',
+        clientSecret: 'f4cac46a3ae606b5b74da444d7e6afbfbdea51d0',
+        repo: 'hudaqian.github.io',
+        owner: 'HuDaQian',
+        admin: ['HuDaQian'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

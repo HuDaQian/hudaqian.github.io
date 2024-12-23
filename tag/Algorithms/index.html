@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>算法 | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1638114699559">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="&lt;h3&gt;最香不过荷包蛋&lt;br&gt;最美不过夜归人&lt;h3&gt;">
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1638114699559" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <h2 class="current-tag">标签: 算法</h2>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/Algorithms_MinStack/">
+                  <h2 class="post-title">最小栈</h2>
+                </a>
+                <div class="post-date">
+                  2021-01-09
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/Algorithms_DisjointSets_02/">
+                  <h2 class="post-title">并查集的路径优化</h2>
+                </a>
+                <div class="post-date">
+                  2021-01-02
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/Algorithms_DisjointSets_01/">
+                  <h2 class="post-title">并查集基础和常规实现方法</h2>
+                </a>
+                <div class="post-date">
+                  2021-01-01
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_11/">
+                  <h2 class="post-title">重读-《我的第一本算法书》-08 其它算法</h2>
+                </a>
+                <div class="post-date">
+                  2020-12-31
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_10/">
+                  <h2 class="post-title">重读-《我的第一本算法书》-07 安全算法</h2>
+                </a>
+                <div class="post-date">
+                  2020-12-26
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_09/">
+                  <h2 class="post-title">重读-《我的第一本算法书》-06 图的搜索</h2>
+                </a>
+                <div class="post-date">
+                  2020-12-19
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_08/">
+                  <h2 class="post-title">重读-《我的第一本算法书》-05 查找</h2>
+                </a>
+                <div class="post-date">
+                  2020-12-12
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_07/">
+                  <h2 class="post-title">Java实现一个最小堆（或者最大堆）&amp;堆排序</h2>
+                </a>
+                <div class="post-date">
+                  2020-12-06
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_06/">
+                  <h2 class="post-title">重读-《我的第一本算法书》-04 排序</h2>
+                </a>
+                <div class="post-date">
+                  2020-12-04
+                </div>
+                <div class="post-abstract">
+                  <p>冒泡排序<br>
+选择排序<br>
+插入排序<br>
+归并排序<br>
+快速排序</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_05/">
+                  <h2 class="post-title">Java实现双向链表</h2>
+                </a>
+                <div class="post-date">
+                  2020-12-03
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_04/">
+                  <h2 class="post-title">Java实现单向链表</h2>
+                </a>
+                <div class="post-date">
+                  2020-12-03
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_03/">
+                  <h2 class="post-title">重读-《我的第一本算法书》-03 非线性排列的数据结构</h2>
+                </a>
+                <div class="post-date">
+                  2020-11-29
+                </div>
+                <div class="post-abstract">
+                  <p>堆<br>
+二叉查找树</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_02/">
+                  <h2 class="post-title">重读-《我的第一本算法书》-02 线性排列的数据结构</h2>
+                </a>
+                <div class="post-date">
+                  2020-11-28
+                </div>
+                <div class="post-abstract">
+                  <p>什么是数据结构<br>
+链表<br>
+数组<br>
+栈<br>
+队列<br>
+哈希表</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hudaqian.github.io/MyFirstAlgorithmsBook_01/">
+                  <h2 class="post-title">重读-《我的第一本算法书》-01 基本知识</h2>
+                </a>
+                <div class="post-date">
+                  2020-11-28
+                </div>
+                <div class="post-abstract">
+                  <p>什么是算法<br>
+算法的设计<br>
+如何选择算法<br>
+全排列算法<br>
+选择排序<br>
+时间复杂度</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

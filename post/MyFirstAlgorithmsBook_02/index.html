@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>重读-《我的第一本算法书》-02 线性排列的数据结构 | 小九的酒窝</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://hudaqian.github.io/favicon.ico?v=1606553410345">
+<link rel="stylesheet" href="https://hudaqian.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="什么是数据结构
+链表
+数组
+栈
+队列
+哈希表
+
+什么是数据结构
+数据结构决定数据的顺序和位置关系
+我们把内存看成一个一个的小格子，数据存储在这些小格子中。
+数据存储于内存时，决定了数据的顺序和位置关系的就是“数据结构”。
+选择合适的数据结构..." />
+    <meta name="keywords" content="算法" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hudaqian.github.io">
+        <img src="https://hudaqian.github.io/images/avatar.png?v=1606553410345" class="site-logo">
+        <h1 class="site-title">小九的酒窝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/post/aboutme" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="https://github.com/HuDaQian" class="site-nav" target="_blank">
+            Github
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/My2048/index.html" class="site-nav" target="_blank">
+            2048
+          </a>
+        
+      
+        
+          <a href="https://hudaqian.github.io/GameLibrary/CatGame/index.html" class="site-nav" target="_blank">
+            CatchCat
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h3>最香不过荷包蛋<br>最美不过夜归人<h3>
+    </div>
+    <div class="site-footer">
+      <h3>Miloy❤️Grace</h3> | <a class="rss" href="https://hudaqian.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">重读-《我的第一本算法书》-02 线性排列的数据结构</h2>
+            <div class="post-date">2020-11-28</div>
+            
+            <div class="post-content" v-pre>
+              <p>什么是数据结构<br>
+链表<br>
+数组<br>
+栈<br>
+队列<br>
+哈希表</p>
+<!-- more -->
+<h1 id="什么是数据结构">什么是数据结构</h1>
+<p><code>数据结构决定数据的顺序和位置关系</code><br>
+我们把内存看成一个一个的小格子，数据存储在这些小格子中。<br>
+数据存储于内存时，决定了数据的顺序和位置关系的就是“数据结构”。<br>
+<code>选择合适的数据结构以提高内存的利用率</code><br>
+将数据存储于内存时，根据使用目的的选择合适的数据结构，可以提高内存的利用率。<br>
+我们可以大概将数据结构分成 ‘线性排列’ 和 ‘非线性排列’ 。</p>
+<h1 id="链表">链表</h1>
+<p>链表是线性排列的数据结构之一。在链表中，数据的添加和删除比较方便，就是访问比较耗费时间。<br>
+链表有多个节点链接而成。以单链表为例，当前节点除了存储自身数据以外，还存储了下一个节点的地址。<br>
+链表的数据一般都是分散存储于内存中，无需存储在连续空间内。如果要访问数据的话，只能从第一个数据开始，顺着指针的指向一一向下访问（顺序访问）。但是，如果要添加数据的话，只需要改变添加位置前后指针的指向就可以了。数据的删除也一样简单，改变前面节点的指针指向到删除节点的下级节点就可以了。<br>
+用时间复杂度来描述的话，链表的数据量为n，增加的时间复杂度为O(1)，删除的为O(1), 查询的为O(n)。</p>
+<pre><code>当然，还有首位节点相连的环形链表，节点中两个指针指向上下级节点的双向链表。
+不同的应用场景选择使用不同的数据结构。
+</code></pre>
+<h1 id="数组">数组</h1>
+<p>数组也是线性排列的数据结构之一。在数组中，访问数据十分简单，而添加和删除数据比较耗费时间。<br>
+数组内的数据按顺序排列在内存的连续空间内，一般用数组的首位元素的地址来代表数组的地址。由于数据是存储在连续空间内，所以每个数据的内存地址都可以通过数组下表计算出，所以能直接访问目标数据（随机访问）。但是要增加数据的时候，首先要开辟一点空间，保证元素可以正常插入，然后将插入位置之后的元素逐步向后移动，再在空出来的位置上写入新数据。删除则是，先删除目标数据，然后将后边的元素逐步向前移动，随后再删除掉多余的空间。<br>
+用时间复杂度来说，数组的数据量为n，查询的时间复杂度为O(1), 增加的为O(n), 删除的为O(n)。</p>
+<pre><code>在链表和数组中，数据都是线性的排成一列，在链表中增删比较简单，在数组中查询比较简单，
+我们可以根据哪种操作比较频繁来决定使用哪种数据结构。
+</code></pre>
+<h1 id="栈">栈</h1>
+<p>栈也是一种数据呈线性排列的数据结构，但是在这种数据结构中，我们只能访问最新添加的数据。<br>
+像栈这种最后添加的数据最先被取出，即后进先出的数据结构，我们称为Last In First Out, 简称LIFO。<br>
+在栈中，添加和删除数据只能在一端进行，访问数据也只能访问最顶端的数据，想要访问中间的数据的时候，就必须通过出栈操作将目标数据移动到栈顶才行。<br>
+看起来操作十分不便，但是在仅仅访问最新数据的时候，它就非常方便了。</p>
+<h1 id="队列">队列</h1>
+<p>队列也是一种数据呈线性排列的数据结构，虽然与栈看起来有些相似，但是队列中添加和删除数据的操作分别在队列的两端。在队列中，处理总是从第一名开始往后进行，而新来的数据只能排在队尾。<br>
+像队列这种最先进去的数据最先被取出，即先进先出的数据结构，我们称为First In First Out，简称FIFO。<br>
+与栈类似，队列中可以操作数据的位置也有一定的限制，队列中数据的添加和删除在两端进行，也不能访问处于中间的数据，必须通过出队操作将目标数据变成首位才能访问。</p>
+<h1 id="哈希表">哈希表</h1>
+<p>一般来说有哈希列表和哈希映射两种形式，实际上都是哈希表。我们先新建一个长度为n的数组，用来存储数据，存的时候 将元素或者键值对的键 执行哈希函数，然后拿得到的哈希值，对n取模，然后存入数组中相应的位置。如果需要存入的两条数据的哈希值对n取模相同的话，这种情况称为哈希冲突，遇到这种情况，则使用链表在已经存入的数据后边存入新数据。<br>
+查询的时候，取哈希值，取对n的模，然后查找链表。所以查询的效率比单纯的数组要高很多。<br>
+从这种存储方式来看，要看n定义的大小，如果n太小，那么很容易发生哈希冲突，查询效率会差很多，想反，如果n太大的话，则造成空间浪费。</p>
+<pre><code>    使用链表处理哈希冲突这种方法，叫做链地址法。
+    除了这种方法，使用比较广泛的是开放地址法。是指，在冲突发生的时候，立刻计算一个候补地址，将数据存进去，如果仍然有冲突，变继续寻找下一个候补地址，直到有空的地址为止。
+    可以多次使用哈希函数，或者线性探测法等方法来查询候补地址。
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://hudaqian.github.io/tag/Algorithms/" class="tag">
+                    算法
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hudaqian.github.io/post/MyFirstAlgorithmsBook_01/">
+                  <h3 class="post-title">
+                    重读-《我的第一本算法书》-01 基本知识
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '70e70574c307d3e0aab1',
+        clientSecret: 'f4cac46a3ae606b5b74da444d7e6afbfbdea51d0',
+        repo: 'hudaqian.github.io',
+        owner: 'HuDaQian',
+        admin: ['HuDaQian'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
